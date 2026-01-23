@@ -1,6 +1,16 @@
 package net.astronomy.dnd.enums;
 
 public enum CharacterClass {
-    FIGHTER, WIZARD, ROGUE, CLERIC, BARBARIAN,
-    PALADIN, RANGER, DRUID, WARLOCK, BARD, MONK, SORCERER
+    BARBARIAN,
+    BARD,
+    CLERIC,
+    DRUID,
+    FIGHTER,
+    MONK,
+    PALADIN,
+    RANGER,
+    ROGUE,
+    SORCERER,
+    WARLOCK,
+    WIZARD
 }
