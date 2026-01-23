@@ -1,6 +1,6 @@
 package net.astronomy.dnd.model;
 
-public class AbilityScores {
+public class Abilities {
     private int strength;
     private int dexterity;
     private int constitution;
@@ -8,8 +8,8 @@ public class AbilityScores {
     private int wisdom;
     private int charisma;
 
-    public AbilityScores(int strength, int dexterity, int constitution,
-                         int intelligence, int wisdom, int charisma) {
+    public Abilities(int strength, int dexterity, int constitution,
+                     int intelligence, int wisdom, int charisma) {
         this.strength = strength;
         this.dexterity = dexterity;
         this.constitution = constitution;

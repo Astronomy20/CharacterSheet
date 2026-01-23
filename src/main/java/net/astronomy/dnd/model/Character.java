@@ -13,16 +13,16 @@ public class Character {
     private CharacterClass characterClass;
     private Background background;
     private Alignment alignment;
-    private AbilityScores abilityScores;
+    private Abilities abilities;
 
-    public Character(String name, int level, Race race, CharacterClass characterClass, Background background, Alignment alignment, AbilityScores abilityScores) {
+    public Character(String name, int level, Race race, CharacterClass characterClass, Background background, Alignment alignment, Abilities abilities) {
         this.name = name;
         this.level = level;
         this.race = race;
         this.characterClass = characterClass;
         this.background = background;
         this.alignment = alignment;
-        this.abilityScores = abilityScores;
+        this.abilities = abilities;
     }
 
     public String getName() {
@@ -54,7 +54,7 @@ public class Character {
         return alignment;
     }
 
-    public AbilityScores getAbilityScores() {
-        return abilityScores;
+    public Abilities getAbilityScores() {
+        return abilities;
     }
 }

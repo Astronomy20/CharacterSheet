@@ -1,13 +1,13 @@
 package net.astronomy.dnd;
 
-import net.astronomy.dnd.model.AbilityScores;
+import net.astronomy.dnd.model.Abilities;
 import net.astronomy.dnd.model.Character;
 import net.astronomy.dnd.enums.attributes.Alignment;
 import net.astronomy.dnd.enums.attributes.Background;
 import net.astronomy.dnd.enums.attributes.CharacterClass;
 import net.astronomy.dnd.enums.attributes.Race;
 import net.astronomy.dnd.util.CharacterPrinter;
-import net.astronomy.dnd.util.Dices;
+import net.astronomy.dnd.util.dice.Dices;
 
 public class CharacterSheet {
     public static void main(String[] args) {
@@ -18,7 +18,7 @@ public class CharacterSheet {
                 CharacterClass.MONK,
                 Background.ACOLYTE,
                 Alignment.LAWFUL_GOOD,
-                new AbilityScores(
+                new Abilities(
                         Dices.getAbilitiesValueRolls()[0],
                         Dices.getAbilitiesValueRolls()[1],
                         Dices.getAbilitiesValueRolls()[2],
