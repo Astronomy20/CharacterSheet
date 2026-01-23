@@ -1,4 +1,4 @@
-package net.astronomy.dnd.enums;
+package net.astronomy.dnd.enums.attributes;
 
 public enum Race {
     DRAGONBORN,

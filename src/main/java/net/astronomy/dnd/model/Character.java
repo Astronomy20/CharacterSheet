@@ -1,9 +1,9 @@
 package net.astronomy.dnd.model;
 
-import net.astronomy.dnd.enums.Alignment;
-import net.astronomy.dnd.enums.CharacterClass;
-import net.astronomy.dnd.enums.Race;
-import net.astronomy.dnd.enums.Background;
+import net.astronomy.dnd.enums.attributes.Alignment;
+import net.astronomy.dnd.enums.attributes.CharacterClass;
+import net.astronomy.dnd.enums.attributes.Race;
+import net.astronomy.dnd.enums.attributes.Background;
 
 public class Character {
     private final String name;
