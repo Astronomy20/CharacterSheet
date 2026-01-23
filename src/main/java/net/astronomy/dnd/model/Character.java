@@ -3,13 +3,14 @@ package net.astronomy.dnd.model;
 import net.astronomy.dnd.enums.Alignment;
 import net.astronomy.dnd.enums.CharacterClass;
 import net.astronomy.dnd.enums.Race;
+import net.agronomy.dnd.enums.Background;
 
 public class Character {
     private String name;
     private Race race;
     private CharacterClass characterClass;
     private int level;
-    private String background;
+    private Background background;
     private Alignment alignment;
     private int experiencePoints;
 
