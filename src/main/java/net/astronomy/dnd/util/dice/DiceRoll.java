@@ -8,7 +8,7 @@ public class DiceRoll {
     private int[] roll;
 
     public DiceRoll(int[] roll) {
-        this.roll = Arrays.copyOf(roll, size());
+        this.roll = Arrays.copyOf(roll, roll.length);
     }
 
     public static DiceRoll roll(Dices.Dice dice, int times) {

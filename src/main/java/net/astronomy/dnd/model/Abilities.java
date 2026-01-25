@@ -18,6 +18,10 @@ public class Abilities {
         this.charisma = charisma;
     }
 
+    public static int getModifier(int ability_score) {
+        return (int) Math.floor((ability_score - 10) / 2.0);
+    }
+
     public int getStrength() {
         return strength;
     }

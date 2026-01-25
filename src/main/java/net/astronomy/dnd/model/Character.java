@@ -14,8 +14,10 @@ public class Character {
     private Background background;
     private Alignment alignment;
     private Abilities abilities;
+    private SavingThrows savingThrows;
+    private Skills skills;
 
-    public Character(String name, int level, Race race, CharacterClass characterClass, Background background, Alignment alignment, Abilities abilities) {
+    public Character(String name, int level, Race race, CharacterClass characterClass, Background background, Alignment alignment, Abilities abilities, SavingThrows savingThrows, Skills skills) {
         this.name = name;
         this.level = level;
         this.race = race;
@@ -23,6 +25,8 @@ public class Character {
         this.background = background;
         this.alignment = alignment;
         this.abilities = abilities;
+        this.savingThrows = savingThrows;
+        this.skills = skills;
     }
 
     public String getName() {
@@ -45,7 +49,6 @@ public class Character {
         return characterClass;
     }
 
-
     public Background getBackground() {
         return background;
     }
@@ -54,7 +57,15 @@ public class Character {
         return alignment;
     }
 
-    public Abilities getAbilityScores() {
+    public Abilities getAbilities() {
         return abilities;
+    }
+
+    public SavingThrows getSavingThrows() {
+        return savingThrows;
+    }
+
+    public Skills getSkills() {
+        return skills;
     }
 }
