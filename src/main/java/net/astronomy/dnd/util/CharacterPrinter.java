@@ -13,6 +13,8 @@ public class CharacterPrinter {
         System.out.println("Name: " + character.getName());
         System.out.println("Race: " + character.getRace());
         System.out.println("Class: " + character.getCharacterClass());
+        System.out.println("Background: " + character.getBackground());
+        System.out.println("Alignment: " + character.getAlignment());
         System.out.println("Level: " + character.getLevel());
         System.out.println();
 
