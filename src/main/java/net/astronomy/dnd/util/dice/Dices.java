@@ -1,10 +1,6 @@
 package net.astronomy.dnd.util.dice;
 
-import java.util.Random;
-
 public class Dices {
-    private static final Random RANDOM = new Random();
-
     public enum Dice {
         D4(4),
         D6(6),

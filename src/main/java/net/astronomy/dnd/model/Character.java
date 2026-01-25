@@ -17,16 +17,18 @@ public class Character {
     private SavingThrows savingThrows;
     private Skills skills;
 
-    public Character(String name, int level, Race race, CharacterClass characterClass, Background background, Alignment alignment, Abilities abilities, SavingThrows savingThrows, Skills skills) {
+    public Character(String name, int level, Race race, CharacterClass characterClass, Background background, Alignment alignment, Abilities abilities) {
         this.name = name;
         this.level = level;
         this.race = race;
         this.characterClass = characterClass;
         this.background = background;
         this.alignment = alignment;
-        this.abilities = abilities;
-        this.savingThrows = savingThrows;
-        this.skills = skills;
+        this.abilities = new Abilities(abilities.getStrength(), abilities.getDexterity(), abilities.getConstitution(),
+                                        abilities.getIntelligence(), abilities.getWisdom(), abilities.getCharisma());
+        this.abilities.applyRaceBonuses(race);
+        this.savingThrows = new SavingThrows(abilities);
+        this.skills = new Skills(abilities);
     }
 
     public String getName() {

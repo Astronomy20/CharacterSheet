@@ -1,5 +1,7 @@
 package net.astronomy.dnd.model;
 
+import net.astronomy.dnd.enums.attributes.Race;
+
 public class Abilities {
     private int strength;
     private int dexterity;
@@ -7,6 +9,15 @@ public class Abilities {
     private int intelligence;
     private int wisdom;
     private int charisma;
+
+    public enum Ability {
+        STRENGTH,
+        DEXTERITY,
+        CONSTITUTION,
+        INTELLIGENCE,
+        WISDOM,
+        CHARISMA
+    }
 
     public Abilities(int strength, int dexterity, int constitution,
                      int intelligence, int wisdom, int charisma) {
@@ -16,6 +27,15 @@ public class Abilities {
         this.intelligence = intelligence;
         this.wisdom = wisdom;
         this.charisma = charisma;
+    }
+
+    public void applyRaceBonuses(Race race) {
+        this.strength += race.getBonus(Ability.STRENGTH);
+        this.dexterity += race.getBonus(Ability.DEXTERITY);
+        this.constitution += race.getBonus(Ability.CONSTITUTION);
+        this.intelligence += race.getBonus(Ability.INTELLIGENCE);
+        this.wisdom += race.getBonus(Ability.WISDOM);
+        this.charisma += race.getBonus(Ability.CHARISMA);
     }
 
     public static int getModifier(int ability_score) {
