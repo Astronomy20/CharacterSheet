@@ -25,8 +25,8 @@ public class Character {
         this.background = background;
         this.alignment = alignment;
         this.abilities = new Abilities(abilities.getStrength(), abilities.getDexterity(), abilities.getConstitution(),
-                                        abilities.getIntelligence(), abilities.getWisdom(), abilities.getCharisma());
-        this.abilities.applyRaceBonuses(race);
+                                        abilities.getIntelligence(), abilities.getWisdom(), abilities.getCharisma(),
+                                        race);
         this.savingThrows = new SavingThrows(abilities);
         this.skills = new Skills(abilities);
         this.languages = race.getLanguages();

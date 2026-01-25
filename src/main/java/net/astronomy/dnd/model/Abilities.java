@@ -29,13 +29,14 @@ public class Abilities {
         this.charisma = charisma;
     }
 
-    public void applyRaceBonuses(Race race) {
-        this.strength += race.getBonus(Ability.STRENGTH);
-        this.dexterity += race.getBonus(Ability.DEXTERITY);
-        this.constitution += race.getBonus(Ability.CONSTITUTION);
-        this.intelligence += race.getBonus(Ability.INTELLIGENCE);
-        this.wisdom += race.getBonus(Ability.WISDOM);
-        this.charisma += race.getBonus(Ability.CHARISMA);
+    public Abilities(int strength, int dexterity, int constitution,
+                     int intelligence, int wisdom, int charisma, Race race) {
+        this.strength = strength + race.getBonus(Ability.STRENGTH);
+        this.dexterity = dexterity + race.getBonus(Ability.STRENGTH);
+        this.constitution = constitution + race.getBonus(Ability.STRENGTH);
+        this.intelligence = intelligence + race.getBonus(Ability.STRENGTH);
+        this.wisdom = wisdom + race.getBonus(Ability.STRENGTH);
+        this.charisma = charisma + race.getBonus(Ability.STRENGTH);
     }
 
     public static int getModifier(int ability_score) {
