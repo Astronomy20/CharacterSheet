@@ -8,6 +8,31 @@ public class SavingThrows {
     private int wisdom;
     private int charisma;
 
+    public enum SavingThrow {
+        STRENGTH("Strength"),
+        DEXTERITY("Dexterity"),
+        CONSTITUTION("Constitution"),
+        INTELLIGENCE("Intelligence"),
+        WISDOM("Wisdom"),
+        CHARISMA("Charisma");
+
+        private final String displayName;
+
+        SavingThrow(String displayName) {
+            this.displayName = displayName;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
+
+        @Override
+        public String toString() {
+            return displayName;
+        }
+
+    }
+
     public SavingThrows(Abilities abilities) {
         this.strength = Abilities.getModifier(abilities.getStrength());
         this.dexterity = Abilities.getModifier(abilities.getDexterity());

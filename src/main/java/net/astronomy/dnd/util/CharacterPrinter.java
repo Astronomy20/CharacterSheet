@@ -1,6 +1,8 @@
 package net.astronomy.dnd.util;
 
+import net.astronomy.dnd.enums.attributes.Language;
 import net.astronomy.dnd.model.Character;
+import net.astronomy.dnd.model.SavingThrows.SavingThrow;
 
 public class CharacterPrinter {
 
@@ -23,13 +25,19 @@ public class CharacterPrinter {
         System.out.println("Charisma: " + character.getAbilities().getCharisma());
         System.out.println();
 
-        System.out.println("--- Saving Throws ---");
+        System.out.println("--- Modifiers ---");
         System.out.println("Strength: " + character.getSavingThrows().getStrength());
         System.out.println("Dexterity: " + character.getSavingThrows().getDexterity());
         System.out.println("Constitution: " + character.getSavingThrows().getConstitution());
         System.out.println("Intelligence: " + character.getSavingThrows().getIntelligence());
         System.out.println("Wisdom: " + character.getSavingThrows().getWisdom());
         System.out.println("Charisma: " + character.getSavingThrows().getCharisma());
+        System.out.println();
+
+        System.out.println("--- Saving Throws ---");
+        for (SavingThrow saving_throw : character.getCharacterClass().getProficientSavingThrows()) {
+            System.out.println(saving_throw);
+        }
         System.out.println();
 
         System.out.println("--- Skills ---");
@@ -51,5 +59,11 @@ public class CharacterPrinter {
         System.out.println("Sleight of Hand: " + character.getSkills().getSleight_of_hand());
         System.out.println("Stealth: " + character.getSkills().getStealth());
         System.out.println("Survival: " + character.getSkills().getSurvival());
+        System.out.println();
+
+        System.out.println("--- Languages ---");
+        for (Language language : character.getRace().getLanguages()) {
+            System.out.println(language);
+        }
     }
 }

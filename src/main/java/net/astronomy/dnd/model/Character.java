@@ -1,9 +1,8 @@
 package net.astronomy.dnd.model;
 
-import net.astronomy.dnd.enums.attributes.Alignment;
-import net.astronomy.dnd.enums.attributes.CharacterClass;
-import net.astronomy.dnd.enums.attributes.Race;
-import net.astronomy.dnd.enums.attributes.Background;
+import net.astronomy.dnd.enums.attributes.*;
+
+import java.util.Set;
 
 public class Character {
     private final String name;
@@ -16,6 +15,7 @@ public class Character {
     private Abilities abilities;
     private SavingThrows savingThrows;
     private Skills skills;
+    private Set<Language> languages;
 
     public Character(String name, int level, Race race, CharacterClass characterClass, Background background, Alignment alignment, Abilities abilities) {
         this.name = name;
@@ -29,6 +29,7 @@ public class Character {
         this.abilities.applyRaceBonuses(race);
         this.savingThrows = new SavingThrows(abilities);
         this.skills = new Skills(abilities);
+        this.languages = race.getLanguages();
     }
 
     public String getName() {
