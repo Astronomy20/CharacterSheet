@@ -1,5 +1,7 @@
 package net.astronomy.dnd.enums.attributes;
 
+import java.util.Set;
+
 public enum Language {
     COMMON("Common"),
     DWARVISH("Dwarvish"),
@@ -19,9 +21,14 @@ public enum Language {
     UNDERCOMMON("Undercommon");
 
     private final String displayName;
+    private final Set<Language> languages = Set.of();
 
     Language(String displayName) {
         this.displayName = displayName;
+    }
+
+    public Language addLanguage(Language language) {
+        return language;
     }
 
     public String getDisplayName() {

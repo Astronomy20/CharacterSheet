@@ -1,4 +1,5 @@
 package net.astronomy.dnd.enums.equipment;
 
 public enum AdventureGear {
+    BAG
 }
