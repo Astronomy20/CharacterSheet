@@ -16,6 +16,8 @@ public class Character {
     private SavingThrows savingThrows;
     private Skills skills;
     private Set<Language> languages;
+    private Inventory inventory;
+    private Currency currency;
 
     public Character(String name, int level, Race race, CharacterClass characterClass, Background background, Alignment alignment, Abilities abilities) {
         this.name = name;
@@ -29,7 +31,9 @@ public class Character {
                                         race);
         this.savingThrows = new SavingThrows(abilities);
         this.skills = new Skills(abilities);
-        this.languages = race.getLanguages();
+        this.languages = race.getRaceLanguages();
+        this.inventory = new Inventory();
+        this.currency = new Currency();
     }
 
     public String getName() {
@@ -70,5 +74,17 @@ public class Character {
 
     public Skills getSkills() {
         return skills;
+    }
+
+    public Set<Language> getLanguages() {
+        return languages;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public Currency getCurrency() {
+        return currency;
     }
 }

@@ -64,8 +64,33 @@ public class CharacterPrinter {
         System.out.println();
 
         System.out.println("--- Languages ---");
-        for (Language language : character.getRace().getLanguages()) {
+        for (Language language : character.getRace().getRaceLanguages()) {
             System.out.println(language);
         }
+        System.out.println();
+
+        System.out.println("--- Inventory ---");
+        System.out.println("Armors:");
+        character.getInventory().getArmors().forEach((item, quantity) ->
+                System.out.println("  " + item + " x" + quantity)
+        );
+        System.out.println("Weapons:");
+        character.getInventory().getWeapons().forEach((item, quantity) ->
+                System.out.println("  " + item + " x" + quantity)
+        );
+        System.out.println("Adventure Gear:");
+        character.getInventory().getAdventureGear().forEach((item, quantity) ->
+                System.out.println("  " + item + " x" + quantity)
+        );
+        System.out.println("Instruments:");
+        character.getInventory().getInstruments().forEach((item, quantity) ->
+                System.out.println("  " + item + " x" + quantity)
+        );
+        System.out.println();
+
+        System.out.println("--- Currency ---");
+        character.getCurrency().getAllCoins().forEach((coin, quantity) ->
+                System.out.println("  " + coin.getDisplayName() + ": " + quantity)
+        );
     }
 }
