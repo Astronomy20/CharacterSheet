@@ -13,7 +13,11 @@ public enum Race {
                     Ability.STRENGTH, 2,
                     Ability.CHARISMA, 1
             ),
-            Set.of(Language.COMMON, Language.DRACONIC)
+            Set.of(
+                    Language.COMMON,
+                    Language.DRACONIC
+            ),
+            0
     ),
 
     DWARF(
@@ -21,7 +25,11 @@ public enum Race {
             Map.of(
                     Ability.CONSTITUTION, 2
             ),
-            Set.of(Language.COMMON, Language.DWARVISH)
+            Set.of(
+                    Language.COMMON,
+                    Language.DWARVISH
+            ),
+            0
     ),
 
     ELF(
@@ -31,7 +39,11 @@ public enum Race {
                     Ability.INTELLIGENCE, 1,
                     Ability.WISDOM, 1
             ),
-            Set.of(Language.COMMON, Language.ELVISH)
+            Set.of(
+                    Language.COMMON,
+                    Language.ELVISH
+            ),
+            0
     ),
 
     GNOME(
@@ -41,15 +53,24 @@ public enum Race {
                     Ability.CONSTITUTION, 1,
                     Ability.INTELLIGENCE, 2
             ),
-            Set.of(Language.COMMON, Language.GNOMISH)
+            Set.of(
+                    Language.COMMON,
+                    Language.GNOMISH
+            ),
+            0
     ),
 
     HALF_ELF(
             "Half-Elf",
             Map.of(
                     Ability.CHARISMA, 2
+                    // Half-Elf gets +1 to two other abilities;
             ),
-            Set.of(Language.COMMON, Language.ELVISH)
+            Set.of(
+                    Language.COMMON,
+                    Language.ELVISH
+            ),
+            1
     ),
 
     HALF_ORC(
@@ -58,7 +79,11 @@ public enum Race {
                     Ability.STRENGTH, 2,
                     Ability.CONSTITUTION, 1
             ),
-            Set.of(Language.COMMON, Language.ORC)
+            Set.of(
+                    Language.COMMON,
+                    Language.ORC
+            ),
+            0
     ),
 
     HALFLING(
@@ -67,7 +92,11 @@ public enum Race {
                     Ability.DEXTERITY, 2,
                     Ability.CONSTITUTION, 1
             ),
-            Set.of(Language.COMMON, Language.HALFLING)
+            Set.of(
+                    Language.COMMON,
+                    Language.HALFLING
+            ),
+            0
     ),
 
     HUMAN(
@@ -80,7 +109,10 @@ public enum Race {
                     Ability.WISDOM, 1,
                     Ability.CHARISMA, 1
             ),
-            Set.of(Language.COMMON)
+            Set.of(
+                    Language.COMMON
+            ),
+            1
     ),
 
     ORC(
@@ -89,7 +121,11 @@ public enum Race {
                     Ability.STRENGTH, 2,
                     Ability.CONSTITUTION, 1
             ),
-            Set.of(Language.ORC, Language.COMMON)
+            Set.of(
+                    Language.ORC,
+                    Language.COMMON
+            ),
+            0
     ),
 
     TIEFLING(
@@ -98,24 +134,34 @@ public enum Race {
                     Ability.CHARISMA, 2,
                     Ability.INTELLIGENCE, 1
             ),
-            Set.of(Language.COMMON, Language.INFERNAL)
+            Set.of(
+                    Language.COMMON,
+                    Language.INFERNAL
+            ),
+            0
     );
 
     private final String displayName;
     private final Map<Ability, Integer> abilityBonuses;
     private final Set<Language> languages;
+    private final int extraLanguageChoices;
 
-    Race(String displayName, Map<Ability, Integer> abilityBonuses, Set<Language> languages) {
+    Race(String displayName, Map<Ability, Integer> abilityBonuses, Set<Language> languages, int extraLanguageChoices) {
         this.displayName = displayName;
         this.abilityBonuses = abilityBonuses;
         this.languages = languages;
+        this.extraLanguageChoices = extraLanguageChoices;
     }
 
     public int getBonus(Ability abilityName) {
         return abilityBonuses.getOrDefault(abilityName, 0);
     }
 
-    public Set<Language> getLanguages() {
+    public int getExtraLanguageChoices() {
+        return extraLanguageChoices;
+    }
+
+    public Set<Language> getRaceLanguages() {
         return languages;
     }
 
