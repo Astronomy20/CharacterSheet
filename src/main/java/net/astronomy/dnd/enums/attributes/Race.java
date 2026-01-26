@@ -5,6 +5,10 @@ import net.astronomy.dnd.model.Abilities.Ability;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Character races.
+ * Each race has a human-readable display name, set of ability bonuses and set of spoken languages.
+ */
 public enum Race {
 
     DRAGONBORN(

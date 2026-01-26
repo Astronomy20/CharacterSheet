@@ -4,6 +4,11 @@ import net.astronomy.dnd.model.SavingThrows.SavingThrow;
 
 import java.util.Set;
 
+
+/**
+ * Character classes.
+ * Each class has human-readable display name and the set of saving throws.
+ */
 public enum CharacterClass {
 
     BARBARIAN(

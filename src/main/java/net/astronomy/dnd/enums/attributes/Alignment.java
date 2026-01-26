@@ -1,7 +1,10 @@
 package net.astronomy.dnd.enums.attributes;
 
+/**
+ * Moral alignments for characters.
+ * Each alignment has a human-readable display name.
+ */
 public enum Alignment {
-
     LAWFUL_GOOD("Lawful Good"),
     NEUTRAL_GOOD("Neutral Good"),
     CHAOTIC_GOOD("Chaotic Good"),

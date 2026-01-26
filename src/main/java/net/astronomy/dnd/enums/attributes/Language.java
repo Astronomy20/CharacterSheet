@@ -2,6 +2,10 @@ package net.astronomy.dnd.enums.attributes;
 
 import java.util.Set;
 
+/**
+ * Character and creatures languages.
+ * Each language has a human-readable display name.
+ */
 public enum Language {
     COMMON("Common"),
     DWARVISH("Dwarvish"),

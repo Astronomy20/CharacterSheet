@@ -1,5 +1,9 @@
 package net.astronomy.dnd.enums.attributes;
 
+/**
+ * Character backgrounds.
+ * Each background has a human-readable display name.
+ */
 public enum Background {
 
     ACOLYTE("Acolyte"),

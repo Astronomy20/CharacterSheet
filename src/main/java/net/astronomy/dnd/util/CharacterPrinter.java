@@ -58,7 +58,7 @@ public class CharacterPrinter {
         System.out.println("Performance: " + character.getSkills().getPerformance());
         System.out.println("Persuasion: " + character.getSkills().getPersuasion());
         System.out.println("Religion: " + character.getSkills().getReligion());
-        System.out.println("Sleight of Hand: " + character.getSkills().getSleight_of_hand());
+        System.out.println("Sleight of Hand: " + character.getSkills().getSleightOfHand());
         System.out.println("Stealth: " + character.getSkills().getStealth());
         System.out.println("Survival: " + character.getSkills().getSurvival());
         System.out.println();
