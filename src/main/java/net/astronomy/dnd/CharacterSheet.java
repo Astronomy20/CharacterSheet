@@ -15,7 +15,7 @@ public class CharacterSheet {
         Character padre_mateo = new Character(
                 "Padre Matéo",
                 1,
-                Race.HUMAN,
+                Race.DWARF,
                 CharacterClass.MONK,
                 Background.ACOLYTE,
                 Alignment.LAWFUL_GOOD,
