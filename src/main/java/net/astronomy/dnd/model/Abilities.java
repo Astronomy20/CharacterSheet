@@ -67,12 +67,12 @@ public class Abilities {
     }
 
     /**
-     * Calculates the D&D modifier for a given ability score.
+     * Calculates the modifier for a given ability score.
      *
      * @param ability_score The ability score to calculate the modifier for
      * @return The ability modifier as an integer
      */
-    public static int getModifier(int ability_score) {
+    public static int getModifier(int ability_score) { // TODO: Maybe move to separate Modifier class
         return (int) Math.floor((ability_score - 10) / 2.0);
     }
 

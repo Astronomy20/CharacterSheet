@@ -28,12 +28,12 @@ public class CharacterPrinter {
         System.out.println();
 
         System.out.println("--- Modifiers ---");
-        System.out.println("Strength: " + character.getSavingThrows().getStrength());
-        System.out.println("Dexterity: " + character.getSavingThrows().getDexterity());
-        System.out.println("Constitution: " + character.getSavingThrows().getConstitution());
-        System.out.println("Intelligence: " + character.getSavingThrows().getIntelligence());
-        System.out.println("Wisdom: " + character.getSavingThrows().getWisdom());
-        System.out.println("Charisma: " + character.getSavingThrows().getCharisma());
+        System.out.println("Strength: " + character.getModifiers().getStrength());
+        System.out.println("Dexterity: " + character.getModifiers().getDexterity());
+        System.out.println("Constitution: " + character.getModifiers().getConstitution());
+        System.out.println("Intelligence: " + character.getModifiers().getIntelligence());
+        System.out.println("Wisdom: " + character.getModifiers().getWisdom());
+        System.out.println("Charisma: " + character.getModifiers().getCharisma());
         System.out.println();
 
         System.out.println("--- Saving Throws ---");

@@ -1,5 +1,10 @@
 package net.astronomy.dnd.model;
 
+import net.astronomy.dnd.enums.attributes.CharacterClass;
+
+import java.util.EnumMap;
+import java.util.Map;
+
 /**
  * Character's saving throws.
  * Each saving throw value is the corresponding ability modifier value.
@@ -75,6 +80,34 @@ public class SavingThrows {
         this.intelligence = Abilities.getModifier(abilities.getIntelligence());
         this.wisdom = Abilities.getModifier(abilities.getWisdom());
         this.charisma = Abilities.getModifier(abilities.getCharisma());
+    }
+
+    // TODO: Add dynamic expertise bonus based on character level
+    // TODO: Update Ability modifiers
+    // TODO: Maybe move to separate Modifier class
+    /**
+     * Returns a map of **proficient saving throws and their modifier values**
+     * based on a CharacterClass.
+     *
+     * @param characterClass the character's class, which defines proficiencies
+     * @return map of proficient saving throws and their values
+     */
+    public Map<SavingThrow, Integer> getProficientSavingThrowValues(CharacterClass characterClass) {
+        Map<SavingThrow, Integer> map = new EnumMap<>(SavingThrow.class);
+
+        for (SavingThrow st : characterClass.getProficientSavingThrows()) {
+            int value = switch (st) {
+                case STRENGTH -> strength + 2;
+                case DEXTERITY -> dexterity + 2;
+                case CONSTITUTION -> constitution + 2;
+                case INTELLIGENCE -> intelligence + 2;
+                case WISDOM -> wisdom + 2;
+                case CHARISMA -> charisma + 2;
+            };
+            map.put(st, value);
+        }
+
+        return map;
     }
 
     /** @return the Strength saving throw value */

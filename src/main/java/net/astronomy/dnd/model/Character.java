@@ -2,6 +2,7 @@ package net.astronomy.dnd.model;
 
 import net.astronomy.dnd.enums.attributes.*;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -31,6 +32,8 @@ public class Character {
 
     /** The character's ability scores (Strength, Dexterity, etc.). */
     private Abilities abilities;
+
+    private SavingThrows modifiers;
 
     /** The character's saving throw proficiencies. */
     private SavingThrows savingThrows;
@@ -68,7 +71,8 @@ public class Character {
         this.abilities = new Abilities(abilities.getStrength(), abilities.getDexterity(), abilities.getConstitution(),
                                         abilities.getIntelligence(), abilities.getWisdom(), abilities.getCharisma(),
                                         race);
-        this.savingThrows = new SavingThrows(abilities);
+        this.modifiers = new SavingThrows(abilities);
+        this.savingThrows = this.modifiers;
         this.skills = new Skills(abilities);
         this.languages = race.getRaceLanguages();
         this.inventory = new Inventory();
@@ -113,6 +117,11 @@ public class Character {
     /** @return The character's abilities. */
     public Abilities getAbilities() {
         return abilities;
+    }
+
+    /** @return The character's modifiers. */
+    public SavingThrows getModifiers() {
+        return modifiers;
     }
 
     /** @return The character's saving throws. */

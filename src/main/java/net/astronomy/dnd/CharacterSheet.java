@@ -7,11 +7,14 @@ import net.astronomy.dnd.enums.attributes.Background;
 import net.astronomy.dnd.enums.attributes.CharacterClass;
 import net.astronomy.dnd.enums.attributes.Race;
 import net.astronomy.dnd.util.CharacterPrinter;
+import net.astronomy.dnd.util.SaveSession;
 import net.astronomy.dnd.util.dice.Dices;
+
+import java.io.IOException;
 
 public class CharacterSheet {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Character padre_mateo = new Character(
                 "Padre Matéo",
                 1,
@@ -26,8 +29,11 @@ public class CharacterSheet {
                         Dices.getAbilitiesValueRolls()[3],
                         Dices.getAbilitiesValueRolls()[4],
                         Dices.getAbilitiesValueRolls()[5])
+//                new Abilities(15, 15, 15, 15, 15, 15)
         );
 
         CharacterPrinter.print(padre_mateo);
+
+        SaveSession.saveCharacter(padre_mateo);
     }
 }
