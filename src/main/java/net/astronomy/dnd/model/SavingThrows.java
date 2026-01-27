@@ -2,7 +2,7 @@ package net.astronomy.dnd.model;
 
 /**
  * Character's saving throws.
- * Each saving throw value is calculated based on the corresponding ability modifier.
+ * Each saving throw value is the corresponding ability modifier value.
  */
 public class SavingThrows {
     /** Strength saving throw value */
