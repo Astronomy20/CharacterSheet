@@ -20,7 +20,6 @@ public class SaveSession {
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     static {
-        // Create saves directory if it doesn't exist
         File savesDir = new File(SAVE_DIRECTORY);
         if (!savesDir.exists()) {
             savesDir.mkdirs();
