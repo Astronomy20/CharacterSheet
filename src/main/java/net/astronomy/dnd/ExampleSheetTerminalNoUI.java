@@ -13,7 +13,7 @@ import net.astronomy.dnd.util.dice.Dices;
 
 import java.io.IOException;
 
-public class CharacterSheet {
+public class ExampleSheetTerminalNoUI {
 
     public static void main(String[] args) throws IOException {
         Character padre_mateo = new Character(
