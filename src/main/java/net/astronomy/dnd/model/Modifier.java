@@ -1,6 +1,6 @@
 package net.astronomy.dnd.model;
 
-import net.astronomy.dnd.enums.attributes.CharacterClass;
+import net.astronomy.dnd.model.enums.attributes.CharacterClass;
 
 /**
  * Character's modifiers.

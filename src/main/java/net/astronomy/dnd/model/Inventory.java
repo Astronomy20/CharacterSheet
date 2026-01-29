@@ -1,6 +1,6 @@
 package net.astronomy.dnd.model;
 
-import net.astronomy.dnd.enums.equipment.*;
+import net.astronomy.dnd.model.enums.equipment.*;
 
 import java.util.Collections;
 import java.util.EnumMap;

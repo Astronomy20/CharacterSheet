@@ -1,4 +1,4 @@
-package net.astronomy.dnd.enums.attributes;
+package net.astronomy.dnd.model.enums.attributes;
 
 /**
  * Moral alignments for characters.

@@ -1,6 +1,6 @@
 package net.astronomy.dnd.model;
 
-import net.astronomy.dnd.enums.attributes.*;
+import net.astronomy.dnd.model.enums.attributes.*;
 
 import java.util.Set;
 

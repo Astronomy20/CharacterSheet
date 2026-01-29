@@ -2,10 +2,10 @@ package net.astronomy.dnd;
 
 import net.astronomy.dnd.model.Ability;
 import net.astronomy.dnd.model.Character;
-import net.astronomy.dnd.enums.attributes.Alignment;
-import net.astronomy.dnd.enums.attributes.Background;
-import net.astronomy.dnd.enums.attributes.CharacterClass;
-import net.astronomy.dnd.enums.attributes.Race;
+import net.astronomy.dnd.model.enums.attributes.Alignment;
+import net.astronomy.dnd.model.enums.attributes.Background;
+import net.astronomy.dnd.model.enums.attributes.CharacterClass;
+import net.astronomy.dnd.model.enums.attributes.Race;
 import net.astronomy.dnd.model.Level;
 import net.astronomy.dnd.util.CharacterPrinter;
 import net.astronomy.dnd.util.SaveSession;

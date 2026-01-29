@@ -1,6 +1,6 @@
 package net.astronomy.dnd.util;
 
-import net.astronomy.dnd.enums.attributes.Language;
+import net.astronomy.dnd.model.enums.attributes.Language;
 import net.astronomy.dnd.model.Character;
 import net.astronomy.dnd.model.SavingThrow;
 

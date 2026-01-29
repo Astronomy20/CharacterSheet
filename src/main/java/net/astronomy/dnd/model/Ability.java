@@ -1,6 +1,6 @@
 package net.astronomy.dnd.model;
 
-import net.astronomy.dnd.enums.attributes.Race;
+import net.astronomy.dnd.model.enums.attributes.Race;
 
 /**
  * Character's ability scores: Strength, Dexterity, Constitution, Intelligence, Wisdom, and Charisma.
