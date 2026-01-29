@@ -5,7 +5,7 @@ import net.astronomy.dnd.enums.attributes.Race;
 /**
  * Character's ability scores: Strength, Dexterity, Constitution, Intelligence, Wisdom, and Charisma.
  */
-public class Abilities {
+public class Ability {
     private int strength;
     private int dexterity;
     private int constitution;
@@ -16,7 +16,7 @@ public class Abilities {
     /**
      * Enum representing each type of ability.
      */
-    public enum Ability {
+    public enum Abilities {
         STRENGTH,
         DEXTERITY,
         CONSTITUTION,
@@ -35,8 +35,8 @@ public class Abilities {
      * @param wisdom The Wisdom score
      * @param charisma The Charisma score
      */
-    public Abilities(int strength, int dexterity, int constitution,
-                     int intelligence, int wisdom, int charisma) {
+    public Ability(int strength, int dexterity, int constitution,
+                   int intelligence, int wisdom, int charisma) {
         this.strength = strength;
         this.dexterity = dexterity;
         this.constitution = constitution;
@@ -56,24 +56,14 @@ public class Abilities {
      * @param charisma The base Charisma score
      * @param race The character's race, which may modify ability scores
      */
-    public Abilities(int strength, int dexterity, int constitution,
-                     int intelligence, int wisdom, int charisma, Race race) {
-        this.strength = strength + race.getBonus(Ability.STRENGTH);
-        this.dexterity = dexterity + race.getBonus(Ability.DEXTERITY);
-        this.constitution = constitution + race.getBonus(Ability.CONSTITUTION);
-        this.intelligence = intelligence + race.getBonus(Ability.INTELLIGENCE);
-        this.wisdom = wisdom + race.getBonus(Ability.WISDOM);
-        this.charisma = charisma + race.getBonus(Ability.CHARISMA);
-    }
-
-    /**
-     * Calculates the modifier for a given ability score.
-     *
-     * @param ability_score The ability score to calculate the modifier for
-     * @return The ability modifier as an integer
-     */
-    public static int getModifier(int ability_score) { // TODO: Maybe move to separate Modifier class
-        return (int) Math.floor((ability_score - 10) / 2.0);
+    public Ability(int strength, int dexterity, int constitution,
+                   int intelligence, int wisdom, int charisma, Race race) {
+        this.strength = strength + race.getBonus(Abilities.STRENGTH);
+        this.dexterity = dexterity + race.getBonus(Abilities.DEXTERITY);
+        this.constitution = constitution + race.getBonus(Abilities.CONSTITUTION);
+        this.intelligence = intelligence + race.getBonus(Abilities.INTELLIGENCE);
+        this.wisdom = wisdom + race.getBonus(Abilities.WISDOM);
+        this.charisma = charisma + race.getBonus(Abilities.CHARISMA);
     }
 
     /** @return The Strength score. */

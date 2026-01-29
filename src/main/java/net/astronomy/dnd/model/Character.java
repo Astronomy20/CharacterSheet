@@ -2,7 +2,6 @@ package net.astronomy.dnd.model;
 
 import net.astronomy.dnd.enums.attributes.*;
 
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -13,10 +12,10 @@ public class Character {
     private final String name;
 
     /** The current level of the character. */
-    private int level;
+    private int level; // TODO: Add custom Level class
 
     /** The total experience points the character has accumulated. */
-    private int experiencePoints;
+    private int experiencePoints; // TODO: Manage in Level class
 
     /** The race of the character (e.g., Elf, Human). */
     private Race race;
@@ -31,15 +30,19 @@ public class Character {
     private Alignment alignment;
 
     /** The character's ability scores (Strength, Dexterity, etc.). */
-    private Abilities abilities;
+    private Ability abilities;
 
-    private SavingThrows modifiers;
+    private Modifier modifiers;
 
     /** The character's saving throw proficiencies. */
-    private SavingThrows savingThrows;
+    private SavingThrow savingThrows;
 
     /** The character's skill proficiencies. */
     private Skills skills;
+
+    private int lifePoints;
+
+    private int armorClass;
 
     /** Languages known by the character. */
     private Set<Language> languages;
@@ -61,19 +64,21 @@ public class Character {
      * @param alignment The character's alignment
      * @param abilities The base ability scores
      */
-    public Character(String name, int level, Race race, CharacterClass characterClass, Background background, Alignment alignment, Abilities abilities) {
+    public Character(String name, int level, Race race, CharacterClass characterClass, Background background, Alignment alignment, Ability abilities) {
         this.name = name;
         this.level = level;
         this.race = race;
         this.characterClass = characterClass;
         this.background = background;
         this.alignment = alignment;
-        this.abilities = new Abilities(abilities.getStrength(), abilities.getDexterity(), abilities.getConstitution(),
+        this.abilities = new Ability(abilities.getStrength(), abilities.getDexterity(), abilities.getConstitution(),
                                         abilities.getIntelligence(), abilities.getWisdom(), abilities.getCharisma(),
                                         race);
-        this.modifiers = new SavingThrows(abilities);
-        this.savingThrows = this.modifiers;
-        this.skills = new Skills(abilities);
+        this.modifiers = new Modifier(abilities, this.characterClass);
+        this.savingThrows = new SavingThrow(this.modifiers);
+        this.skills = new Skills(this.modifiers);
+        this.lifePoints = 10;
+        this.armorClass = 10;
         this.languages = race.getRaceLanguages();
         this.inventory = new Inventory();
         this.currency = new Currency();
@@ -115,23 +120,31 @@ public class Character {
     }
 
     /** @return The character's abilities. */
-    public Abilities getAbilities() {
+    public Ability getAbilities() {
         return abilities;
     }
 
     /** @return The character's modifiers. */
-    public SavingThrows getModifiers() {
+    public Modifier getModifiers() {
         return modifiers;
     }
 
     /** @return The character's saving throws. */
-    public SavingThrows getSavingThrows() {
+    public SavingThrow getSavingThrows() {
         return savingThrows;
     }
 
     /** @return The character's skills. */
     public Skills getSkills() {
         return skills;
+    }
+
+    public int getLifePoints() {
+        return lifePoints;
+    }
+
+    public int getArmorClass() {
+        return armorClass;
     }
 
     /** @return The set of languages known by the character. */

@@ -1,15 +1,10 @@
 package net.astronomy.dnd.model;
 
-import net.astronomy.dnd.enums.attributes.CharacterClass;
-
-import java.util.EnumMap;
-import java.util.Map;
-
 /**
  * Character's saving throws.
  * Each saving throw value is the corresponding ability modifier value.
  */
-public class SavingThrows {
+public class SavingThrow {
     /** Strength saving throw value */
     private int strength;
     /** Dexterity saving throw value */
@@ -27,7 +22,7 @@ public class SavingThrows {
      * Enum representing the six types of saving throws.
      * Each enum value has a display name for readability.
      */
-    public enum SavingThrow {
+    public enum SavingThrows {
         STRENGTH("Strength"),
         DEXTERITY("Dexterity"),
         CONSTITUTION("Constitution"),
@@ -43,7 +38,7 @@ public class SavingThrows {
          *
          * @param displayName the human-readable name of the saving throw
          */
-        SavingThrow(String displayName) {
+        SavingThrows(String displayName) {
             this.displayName = displayName;
         }
 
@@ -71,43 +66,15 @@ public class SavingThrows {
      * Constructs a SavingThrows object from an Abilities object.
      * Each saving throw is calculated using the corresponding ability modifier.
      *
-     * @param abilities the Abilities object containing ability scores
+     * @param modifier the Abilities object containing ability scores
      */
-    public SavingThrows(Abilities abilities) {
-        this.strength = Abilities.getModifier(abilities.getStrength());
-        this.dexterity = Abilities.getModifier(abilities.getDexterity());
-        this.constitution = Abilities.getModifier(abilities.getConstitution());
-        this.intelligence = Abilities.getModifier(abilities.getIntelligence());
-        this.wisdom = Abilities.getModifier(abilities.getWisdom());
-        this.charisma = Abilities.getModifier(abilities.getCharisma());
-    }
-
-    // TODO: Add dynamic expertise bonus based on character level
-    // TODO: Update Ability modifiers
-    // TODO: Maybe move to separate Modifier class
-    /**
-     * Returns a map of **proficient saving throws and their modifier values**
-     * based on a CharacterClass.
-     *
-     * @param characterClass the character's class, which defines proficiencies
-     * @return map of proficient saving throws and their values
-     */
-    public Map<SavingThrow, Integer> getProficientSavingThrowValues(CharacterClass characterClass) {
-        Map<SavingThrow, Integer> map = new EnumMap<>(SavingThrow.class);
-
-        for (SavingThrow st : characterClass.getProficientSavingThrows()) {
-            int value = switch (st) {
-                case STRENGTH -> strength + 2;
-                case DEXTERITY -> dexterity + 2;
-                case CONSTITUTION -> constitution + 2;
-                case INTELLIGENCE -> intelligence + 2;
-                case WISDOM -> wisdom + 2;
-                case CHARISMA -> charisma + 2;
-            };
-            map.put(st, value);
-        }
-
-        return map;
+    public SavingThrow(Modifier modifier) {
+        this.strength = modifier.getStrength();
+        this.dexterity = modifier.getDexterity();
+        this.constitution = modifier.getConstitution();
+        this.intelligence = modifier.getIntelligence();
+        this.wisdom = modifier.getWisdom();
+        this.charisma = modifier.getCharisma();
     }
 
     /** @return the Strength saving throw value */

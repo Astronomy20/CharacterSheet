@@ -1,6 +1,6 @@
 package net.astronomy.dnd;
 
-import net.astronomy.dnd.model.Abilities;
+import net.astronomy.dnd.model.Ability;
 import net.astronomy.dnd.model.Character;
 import net.astronomy.dnd.enums.attributes.Alignment;
 import net.astronomy.dnd.enums.attributes.Background;
@@ -22,14 +22,14 @@ public class CharacterSheet {
                 CharacterClass.MONK,
                 Background.ACOLYTE,
                 Alignment.LAWFUL_GOOD,
-                new Abilities(
+                new Ability(
                         Dices.getAbilitiesValueRolls()[0],
                         Dices.getAbilitiesValueRolls()[1],
                         Dices.getAbilitiesValueRolls()[2],
                         Dices.getAbilitiesValueRolls()[3],
                         Dices.getAbilitiesValueRolls()[4],
                         Dices.getAbilitiesValueRolls()[5])
-//                new Abilities(15, 15, 15, 15, 15, 15)
+//                new Ability(15, 15, 15, 15, 15, 15)
         );
 
         CharacterPrinter.print(padre_mateo);

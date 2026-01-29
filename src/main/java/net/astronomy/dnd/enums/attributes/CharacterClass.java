@@ -1,6 +1,6 @@
 package net.astronomy.dnd.enums.attributes;
 
-import net.astronomy.dnd.model.SavingThrows.SavingThrow;
+import net.astronomy.dnd.model.Modifier.Modifiers;
 
 import java.util.Set;
 
@@ -14,112 +14,112 @@ public enum CharacterClass {
     BARBARIAN(
             "Barbarian",
             Set.of(
-                    SavingThrow.STRENGTH,
-                    SavingThrow.CONSTITUTION
+                    Modifiers.STRENGTH,
+                    Modifiers.CONSTITUTION
             )
     ),
 
     BARD(
             "Bard",
             Set.of(
-                    SavingThrow.DEXTERITY,
-                    SavingThrow.CHARISMA
+                    Modifiers.DEXTERITY,
+                    Modifiers.CHARISMA
             )
     ),
 
     CLERIC(
             "Cleric",
             Set.of(
-                    SavingThrow.WISDOM,
-                    SavingThrow.CHARISMA
+                    Modifiers.WISDOM,
+                    Modifiers.CHARISMA
             )
     ),
 
     DRUID(
             "Druid",
             Set.of(
-                    SavingThrow.INTELLIGENCE,
-                    SavingThrow.WISDOM
+                    Modifiers.INTELLIGENCE,
+                    Modifiers.WISDOM
             )
     ),
 
     FIGHTER(
             "Fighter",
             Set.of(
-                    SavingThrow.STRENGTH,
-                    SavingThrow.CONSTITUTION
+                    Modifiers.STRENGTH,
+                    Modifiers.CONSTITUTION
             )
     ),
 
     MONK(
             "Monk",
             Set.of(
-                    SavingThrow.STRENGTH,
-                    SavingThrow.DEXTERITY
+                    Modifiers.STRENGTH,
+                    Modifiers.DEXTERITY
             )
     ),
 
     PALADIN(
             "Paladin",
             Set.of(
-                    SavingThrow.WISDOM,
-                    SavingThrow.CHARISMA
+                    Modifiers.WISDOM,
+                    Modifiers.CHARISMA
             )
     ),
 
     RANGER(
             "Ranger",
             Set.of(
-                    SavingThrow.STRENGTH,
-                    SavingThrow.DEXTERITY
+                    Modifiers.STRENGTH,
+                    Modifiers.DEXTERITY
             )
     ),
 
     ROGUE(
             "Rogue",
             Set.of(
-                    SavingThrow.DEXTERITY,
-                    SavingThrow.INTELLIGENCE
+                    Modifiers.DEXTERITY,
+                    Modifiers.INTELLIGENCE
             )
     ),
 
     SORCERER(
             "Sorcerer",
             Set.of(
-                    SavingThrow.CONSTITUTION,
-                    SavingThrow.CHARISMA
+                    Modifiers.CONSTITUTION,
+                    Modifiers.CHARISMA
             )
     ),
 
     WARLOCK(
             "Warlock",
             Set.of(
-                    SavingThrow.WISDOM,
-                    SavingThrow.CHARISMA
+                    Modifiers.WISDOM,
+                    Modifiers.CHARISMA
             )
     ),
 
     WIZARD(
             "Wizard",
             Set.of(
-                    SavingThrow.INTELLIGENCE,
-                    SavingThrow.WISDOM
+                    Modifiers.INTELLIGENCE,
+                    Modifiers.WISDOM
             )
     );
 
     private final String displayName;
-    private final Set<SavingThrow> proficientSavingThrows;
+    private final Set<Modifiers> proficientSavingThrows;
 
-    CharacterClass(String displayName, Set<SavingThrow> proficientSavingThrows) {
+    CharacterClass(String displayName, Set<Modifiers> proficientSavingThrows) {
         this.displayName = displayName;
         this.proficientSavingThrows = proficientSavingThrows;
     }
 
-    public boolean isProficientIn(SavingThrow savingThrow) {
-        return proficientSavingThrows.contains(savingThrow);
+    public boolean isProficientIn(Modifiers modifiers) {
+        return proficientSavingThrows.contains(modifiers);
     }
 
-    public Set<SavingThrow> getProficientSavingThrows() {
+    public Set<Modifiers> getProficiencyModifiers() {
         return proficientSavingThrows;
     }
 

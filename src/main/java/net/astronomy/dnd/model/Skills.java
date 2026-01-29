@@ -46,27 +46,27 @@ public class Skills {
      * Constructs a Skills object, calculating each skill's value
      * from the corresponding ability modifier.
      *
-     * @param abilities the Abilities object containing ability scores
+     * @param modifier the Abilities object containing ability scores
      */
-    public Skills(Abilities abilities) {
-        this.acrobatics = Abilities.getModifier(abilities.getDexterity());
-        this.animal_handling = Abilities.getModifier(abilities.getWisdom());
-        this.arcana = Abilities.getModifier(abilities.getIntelligence());
-        this.athletics = Abilities.getModifier(abilities.getStrength());
-        this.deception = Abilities.getModifier(abilities.getCharisma());
-        this.history = Abilities.getModifier(abilities.getIntelligence());
-        this.insight = Abilities.getModifier(abilities.getWisdom());
-        this.intimidation = Abilities.getModifier(abilities.getCharisma());
-        this.investigation = Abilities.getModifier(abilities.getIntelligence());
-        this.medicine = Abilities.getModifier(abilities.getWisdom());
-        this.nature = Abilities.getModifier(abilities.getIntelligence());
-        this.perception = Abilities.getModifier(abilities.getWisdom());
-        this.performance = Abilities.getModifier(abilities.getCharisma());
-        this.persuasion = Abilities.getModifier(abilities.getCharisma());
-        this.religion = Abilities.getModifier(abilities.getIntelligence());
-        this.sleight_of_hand = Abilities.getModifier(abilities.getDexterity());
-        this.stealth = Abilities.getModifier(abilities.getDexterity());
-        this.survival = Abilities.getModifier(abilities.getWisdom());
+    public Skills(Modifier modifier) {
+        this.acrobatics = modifier.getDexterity();
+        this.animal_handling = modifier.getWisdom();
+        this.arcana = modifier.getIntelligence();
+        this.athletics = modifier.getStrength();
+        this.deception = modifier.getCharisma();
+        this.history = modifier.getIntelligence();
+        this.insight = modifier.getWisdom();
+        this.intimidation = modifier.getCharisma();
+        this.investigation = modifier.getIntelligence();
+        this.medicine = modifier.getWisdom();
+        this.nature = modifier.getIntelligence();
+        this.perception = modifier.getWisdom();
+        this.performance = modifier.getCharisma();
+        this.persuasion = modifier.getCharisma();
+        this.religion = modifier.getIntelligence();
+        this.sleight_of_hand = modifier.getDexterity();
+        this.stealth = modifier.getDexterity();
+        this.survival = modifier.getWisdom();
     }
 
     /** @return the Acrobatics skill value */

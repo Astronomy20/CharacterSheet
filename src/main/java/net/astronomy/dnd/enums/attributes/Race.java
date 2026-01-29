@@ -1,6 +1,6 @@
 package net.astronomy.dnd.enums.attributes;
 
-import net.astronomy.dnd.model.Abilities.Ability;
+import net.astronomy.dnd.model.Ability.Abilities;
 
 import java.util.Map;
 import java.util.Set;
@@ -14,8 +14,8 @@ public enum Race {
     DRAGONBORN(
             "Dragonborn",
             Map.of(
-                    Ability.STRENGTH, 2,
-                    Ability.CHARISMA, 1
+                    Abilities.STRENGTH, 2,
+                    Abilities.CHARISMA, 1
             ),
             Set.of(
                     Language.COMMON,
@@ -27,7 +27,7 @@ public enum Race {
     DWARF(
             "Dwarf",
             Map.of(
-                    Ability.CONSTITUTION, 2
+                    Abilities.CONSTITUTION, 2
             ),
             Set.of(
                     Language.COMMON,
@@ -39,9 +39,9 @@ public enum Race {
     ELF(
             "Elf",
             Map.of(
-                    Ability.DEXTERITY, 2,
-                    Ability.INTELLIGENCE, 1,
-                    Ability.WISDOM, 1
+                    Abilities.DEXTERITY, 2,
+                    Abilities.INTELLIGENCE, 1,
+                    Abilities.WISDOM, 1
             ),
             Set.of(
                     Language.COMMON,
@@ -53,9 +53,9 @@ public enum Race {
     GNOME(
             "Gnome",
             Map.of(
-                    Ability.DEXTERITY, 1,
-                    Ability.CONSTITUTION, 1,
-                    Ability.INTELLIGENCE, 2
+                    Abilities.DEXTERITY, 1,
+                    Abilities.CONSTITUTION, 1,
+                    Abilities.INTELLIGENCE, 2
             ),
             Set.of(
                     Language.COMMON,
@@ -67,7 +67,7 @@ public enum Race {
     HALF_ELF(
             "Half-Elf",
             Map.of(
-                    Ability.CHARISMA, 2
+                    Abilities.CHARISMA, 2
                     // Half-Elf gets +1 to two other abilities;
             ),
             Set.of(
@@ -80,8 +80,8 @@ public enum Race {
     HALF_ORC(
             "Half-Orc",
             Map.of(
-                    Ability.STRENGTH, 2,
-                    Ability.CONSTITUTION, 1
+                    Abilities.STRENGTH, 2,
+                    Abilities.CONSTITUTION, 1
             ),
             Set.of(
                     Language.COMMON,
@@ -93,8 +93,8 @@ public enum Race {
     HALFLING(
             "Halfling",
             Map.of(
-                    Ability.DEXTERITY, 2,
-                    Ability.CONSTITUTION, 1
+                    Abilities.DEXTERITY, 2,
+                    Abilities.CONSTITUTION, 1
             ),
             Set.of(
                     Language.COMMON,
@@ -106,12 +106,12 @@ public enum Race {
     HUMAN(
             "Human",
             Map.of(
-                    Ability.STRENGTH, 1,
-                    Ability.DEXTERITY, 1,
-                    Ability.CONSTITUTION, 1,
-                    Ability.INTELLIGENCE, 1,
-                    Ability.WISDOM, 1,
-                    Ability.CHARISMA, 1
+                    Abilities.STRENGTH, 1,
+                    Abilities.DEXTERITY, 1,
+                    Abilities.CONSTITUTION, 1,
+                    Abilities.INTELLIGENCE, 1,
+                    Abilities.WISDOM, 1,
+                    Abilities.CHARISMA, 1
             ),
             Set.of(
                     Language.COMMON
@@ -122,8 +122,8 @@ public enum Race {
     ORC(
             "Orc",
             Map.of(
-                    Ability.STRENGTH, 2,
-                    Ability.CONSTITUTION, 1
+                    Abilities.STRENGTH, 2,
+                    Abilities.CONSTITUTION, 1
             ),
             Set.of(
                     Language.ORC,
@@ -135,8 +135,8 @@ public enum Race {
     TIEFLING(
             "Tiefling",
             Map.of(
-                    Ability.CHARISMA, 2,
-                    Ability.INTELLIGENCE, 1
+                    Abilities.CHARISMA, 2,
+                    Abilities.INTELLIGENCE, 1
             ),
             Set.of(
                     Language.COMMON,
@@ -146,18 +146,18 @@ public enum Race {
     );
 
     private final String displayName;
-    private final Map<Ability, Integer> abilityBonuses;
+    private final Map<Abilities, Integer> abilityBonuses;
     private final Set<Language> languages;
     private final int extraLanguageChoices;
 
-    Race(String displayName, Map<Ability, Integer> abilityBonuses, Set<Language> languages, int extraLanguageChoices) {
+    Race(String displayName, Map<Abilities, Integer> abilityBonuses, Set<Language> languages, int extraLanguageChoices) {
         this.displayName = displayName;
         this.abilityBonuses = abilityBonuses;
         this.languages = languages;
         this.extraLanguageChoices = extraLanguageChoices;
     }
 
-    public int getBonus(Ability abilityName) {
+    public int getBonus(Abilities abilityName) {
         return abilityBonuses.getOrDefault(abilityName, 0);
     }
 

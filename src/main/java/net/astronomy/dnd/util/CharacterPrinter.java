@@ -2,7 +2,7 @@ package net.astronomy.dnd.util;
 
 import net.astronomy.dnd.enums.attributes.Language;
 import net.astronomy.dnd.model.Character;
-import net.astronomy.dnd.model.SavingThrows.SavingThrow;
+import net.astronomy.dnd.model.SavingThrow;
 
 public class CharacterPrinter {
 
@@ -37,8 +37,8 @@ public class CharacterPrinter {
         System.out.println();
 
         System.out.println("--- Saving Throws ---");
-        for (SavingThrow saving_throw : character.getCharacterClass().getProficientSavingThrows()) {
-            System.out.println(saving_throw);
+        for (SavingThrow.SavingThrows savingThrow : SavingThrow.SavingThrows.values()) {
+            System.out.println(savingThrow + ": " + character.getModifiers().getModifierValues()[savingThrow.ordinal()]);
         }
         System.out.println();
 
@@ -61,6 +61,11 @@ public class CharacterPrinter {
         System.out.println("Sleight of Hand: " + character.getSkills().getSleightOfHand());
         System.out.println("Stealth: " + character.getSkills().getStealth());
         System.out.println("Survival: " + character.getSkills().getSurvival());
+        System.out.println();
+
+        System.out.println("--- Life ---");
+        System.out.println("Life points: " + character.getLifePoints());
+        System.out.println("Armor class: " + character.getArmorClass());
         System.out.println();
 
         System.out.println("--- Languages ---");
