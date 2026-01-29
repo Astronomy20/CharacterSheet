@@ -6,6 +6,7 @@ import net.astronomy.dnd.enums.attributes.Alignment;
 import net.astronomy.dnd.enums.attributes.Background;
 import net.astronomy.dnd.enums.attributes.CharacterClass;
 import net.astronomy.dnd.enums.attributes.Race;
+import net.astronomy.dnd.model.Level;
 import net.astronomy.dnd.util.CharacterPrinter;
 import net.astronomy.dnd.util.SaveSession;
 import net.astronomy.dnd.util.dice.Dices;
@@ -17,7 +18,7 @@ public class CharacterSheet {
     public static void main(String[] args) throws IOException {
         Character padre_mateo = new Character(
                 "Padre Matéo",
-                1,
+                new Level(1, 0),
                 Race.DWARF,
                 CharacterClass.MONK,
                 Background.ACOLYTE,

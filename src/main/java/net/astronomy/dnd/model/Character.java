@@ -12,36 +12,38 @@ public class Character {
     private final String name;
 
     /** The current level of the character. */
-    private int level; // TODO: Add custom Level class
+    private Level level;
 
     /** The total experience points the character has accumulated. */
-    private int experiencePoints; // TODO: Manage in Level class
+    private Level experiencePoints;
 
-    /** The race of the character (e.g., Elf, Human). */
+    /** The race of the character. */
     private Race race;
 
-    /** The class of the character (e.g., Fighter, Wizard). */
+    /** The class of the character. */
     private CharacterClass characterClass;
 
-    /** The character's background (e.g., Soldier, Sage). */
+    /** The character's background. */
     private Background background;
 
-    /** The alignment of the character (e.g., Chaotic Good). */
+    /** The alignment of the character. */
     private Alignment alignment;
 
-    /** The character's ability scores (Strength, Dexterity, etc.). */
+    /** The character's ability scores. */
     private Ability abilities;
 
     private Modifier modifiers;
 
-    /** The character's saving throw proficiencies. */
+    /** The character's saving throws. */
     private SavingThrow savingThrows;
 
-    /** The character's skill proficiencies. */
+    /** The character's skills. */
     private Skills skills;
 
+    /** The character's life points. */
     private int lifePoints;
 
+    /** The character's skill armor class. */
     private int armorClass;
 
     /** Languages known by the character. */
@@ -50,7 +52,7 @@ public class Character {
     /** The character's inventory of items. */
     private Inventory inventory;
 
-    /** The character's currency (gold, silver, copper, etc.). */
+    /** The character's currency. */
     private Currency currency;
 
     /**
@@ -64,7 +66,7 @@ public class Character {
      * @param alignment The character's alignment
      * @param abilities The base ability scores
      */
-    public Character(String name, int level, Race race, CharacterClass characterClass, Background background, Alignment alignment, Ability abilities) {
+    public Character(String name, Level level, Race race, CharacterClass characterClass, Background background, Alignment alignment, Ability abilities) {
         this.name = name;
         this.level = level;
         this.race = race;
@@ -74,7 +76,7 @@ public class Character {
         this.abilities = new Ability(abilities.getStrength(), abilities.getDexterity(), abilities.getConstitution(),
                                         abilities.getIntelligence(), abilities.getWisdom(), abilities.getCharisma(),
                                         race);
-        this.modifiers = new Modifier(abilities, this.characterClass);
+        this.modifiers = new Modifier(this.level, abilities, this.characterClass);
         this.savingThrows = new SavingThrow(this.modifiers);
         this.skills = new Skills(this.modifiers);
         this.lifePoints = 10;
@@ -90,12 +92,12 @@ public class Character {
     }
 
     /** @return The character's level. */
-    public int getLevel() {
+    public Level getLevel() {
         return level;
     }
 
     /** @return The character's total experience points. */
-    public int getExperiencePoints() {
+    public Level getExperiencePoints() {
         return experiencePoints;
     }
 
@@ -139,10 +141,12 @@ public class Character {
         return skills;
     }
 
+    /** @return The character's life points. */
     public int getLifePoints() {
         return lifePoints;
     }
 
+    /** @return The character's armor class. */
     public int getArmorClass() {
         return armorClass;
     }

@@ -2,6 +2,10 @@ package net.astronomy.dnd.model;
 
 import net.astronomy.dnd.enums.attributes.CharacterClass;
 
+/**
+ * Character's modifiers.
+ * Values are calculated from ability scores, level and class proficiencies.
+ */
 public class Modifier {
     /** Strength saving throw value */
     private int strength;
@@ -56,13 +60,13 @@ public class Modifier {
         }
     }
 
-    Modifier(Ability abilities, CharacterClass characterClass) {
-        this.strength = getModifier(abilities.getStrength()) + getProficientModifierValues(characterClass)[0];
-        this.dexterity = getModifier(abilities.getDexterity()) + getProficientModifierValues(characterClass)[1];
-        this.constitution = getModifier(abilities.getConstitution()) + getProficientModifierValues(characterClass)[2];
-        this.intelligence = getModifier(abilities.getIntelligence()) + getProficientModifierValues(characterClass)[3];
-        this.wisdom = getModifier(abilities.getWisdom()) + getProficientModifierValues(characterClass)[4];
-        this.charisma = getModifier(abilities.getCharisma()) + getProficientModifierValues(characterClass)[5];
+    Modifier(Level level, Ability abilities, CharacterClass characterClass) {
+        this.strength = getModifier(abilities.getStrength()) + getProficientModifierValues(level, characterClass)[0];
+        this.dexterity = getModifier(abilities.getDexterity()) + getProficientModifierValues(level, characterClass)[1];
+        this.constitution = getModifier(abilities.getConstitution()) + getProficientModifierValues(level, characterClass)[2];
+        this.intelligence = getModifier(abilities.getIntelligence()) + getProficientModifierValues(level, characterClass)[3];
+        this.wisdom = getModifier(abilities.getWisdom()) + getProficientModifierValues(level, characterClass)[4];
+        this.charisma = getModifier(abilities.getCharisma()) + getProficientModifierValues(level, characterClass)[5];
     }
 
     /**
@@ -72,7 +76,7 @@ public class Modifier {
      * @param characterClass the character's class, which defines proficiencies
      * @return int[] of proficient modifiers and their values
      */
-    public int[] getProficientModifierValues(CharacterClass characterClass) {
+    public int[] getProficientModifierValues(Level level, CharacterClass characterClass) {
         int[] values = new int[Modifiers.values().length];
 
         for (Modifiers modifier : Modifiers.values()) {
@@ -86,9 +90,8 @@ public class Modifier {
                 case CHARISMA -> charisma;
             };
 
-            // TODO: Add dynamic proficiencyBonus based on character level
             int proficiencyBonus =
-                    characterClass.getProficiencyModifiers().contains(modifier) ? 2 : 0;
+                    characterClass.getProficiencyModifiers().contains(modifier) ? level.getProficiencyBonus(level.getLevel()) : 0;
 
             values[modifier.ordinal()] = baseModifier + proficiencyBonus;
         }

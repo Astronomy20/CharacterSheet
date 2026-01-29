@@ -16,6 +16,7 @@ public class CharacterPrinter {
         System.out.println("Background: " + character.getBackground());
         System.out.println("Alignment: " + character.getAlignment());
         System.out.println("Level: " + character.getLevel());
+        System.out.println("Experience Points: " + character.getExperiencePoints());
         System.out.println();
 
         System.out.println("--- Abilities ---");

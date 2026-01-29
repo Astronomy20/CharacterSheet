@@ -28,6 +28,7 @@ public enum Race {
             "Dwarf",
             Map.of(
                     Abilities.CONSTITUTION, 2
+                    // Dwarf can choose between STRENGTH +2 or WISDOM +1
             ),
             Set.of(
                     Language.COMMON,
@@ -68,7 +69,7 @@ public enum Race {
             "Half-Elf",
             Map.of(
                     Abilities.CHARISMA, 2
-                    // Half-Elf gets +1 to two other abilities;
+                    // Half-Elf gets +1 to two other abilities
             ),
             Set.of(
                     Language.COMMON,
