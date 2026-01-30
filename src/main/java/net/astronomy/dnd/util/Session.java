@@ -14,7 +14,7 @@ import java.text.Normalizer;
  * Utility class for saving and loading D&D characters to/from JSON files.
  * Each character is stored in its own JSON file named after the character.
  */
-public class SaveSession {
+public class Session {
 
     private static final String SAVE_DIRECTORY = "saves";
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();

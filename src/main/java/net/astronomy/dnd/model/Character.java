@@ -14,9 +14,6 @@ public class Character {
     /** The current level of the character. */
     private Level level;
 
-    /** The total experience points the character has accumulated. */
-    private Level experiencePoints;
-
     /** The race of the character. */
     private Race race;
 
@@ -87,14 +84,9 @@ public class Character {
         return name;
     }
 
-    /** @return The character's level. */
+    /** @return The character's level and experience points. */
     public Level getLevel() {
         return level;
-    }
-
-    /** @return The character's total experience points. */
-    public Level getExperiencePoints() {
-        return experiencePoints;
     }
 
     /** @return The character's race. */

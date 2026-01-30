@@ -8,14 +8,12 @@ import net.astronomy.dnd.model.enums.attributes.CharacterClass;
 import net.astronomy.dnd.model.enums.attributes.Race;
 import net.astronomy.dnd.model.Level;
 import net.astronomy.dnd.util.CharacterPrinter;
-import net.astronomy.dnd.util.SaveSession;
 import net.astronomy.dnd.util.dice.Dices;
 
-import java.io.IOException;
 
 public class ExampleSheetTerminalNoUI {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Character padre_mateo = new Character(
                 "Padre Matéo",
                 new Level(1, 0),
@@ -34,7 +32,5 @@ public class ExampleSheetTerminalNoUI {
         );
 
         CharacterPrinter.print(padre_mateo);
-
-        SaveSession.saveCharacter(padre_mateo);
     }
 }

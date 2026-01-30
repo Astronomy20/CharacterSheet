@@ -15,12 +15,13 @@ public class CharacterPrinter {
         System.out.println("Class: " + character.getCharacterClass());
         System.out.println("Background: " + character.getBackground());
         System.out.println("Alignment: " + character.getAlignment());
-        System.out.println("Level: " + character.getLevel());
-        System.out.println("Experience Points: " + character.getExperiencePoints());
+        System.out.println("Level: " + character.getLevel().getLevel());
+        System.out.println("Experience Points: " + character.getLevel().getExperiencePoints());
         System.out.println();
 
         System.out.println("--- Life ---");
-        System.out.println("Life points: " + character.getLife().getHitDice());
+        System.out.println("Life points: " + character.getLife().getLifePoints());
+        System.out.println("Hit Dice: " + character.getLife().getHitDice());
         System.out.println("Armor class: " + character.getLife().getArmorClass());
         System.out.println("Initiative : " + character.getLife().getInitiative());
         System.out.println("Speed : " + character.getLife().getSpeed());

@@ -1,9 +1,6 @@
 package net.astronomy.dnd.model;
 
-import net.astronomy.dnd.util.LevelUpListener;
-
-import java.util.ArrayList;
-import java.util.List;
+import net.astronomy.dnd.model.enums.attributes.CharacterClass;
 
 /**
  * Character's level and experience progression.
@@ -13,8 +10,6 @@ public class Level {
 
     private int level;
     private int experiencePoints;
-
-    private final List<LevelUpListener> listeners = new ArrayList<>();
 
     /**
      * Cumulative experience required to reach each level (1–20).
@@ -62,35 +57,30 @@ public class Level {
     }
 
     /**
-     * Register an object to be notified on level-up.
-     */
-    public void addLevelUpListener(LevelUpListener listener) {
-        listeners.add(listener);
-    }
-
-    /**
      * Adds experience points and levels up the character if enough XP is gained.
      *
      * @param experiencePoints the amount of XP to add
      */
-    public void addExperiencePoints(int experiencePoints) {
+    public void addExperiencePoints(Life life, CharacterClass characterClass, Modifier modifiers, int experiencePoints) {
         this.experiencePoints += experiencePoints;
 
         while (this.level < 20 && this.experiencePoints >= CUMULATIVE_XP_TABLE[this.level]) {
-            levelUp();
+            levelUp(life, characterClass, modifiers);
         }
     }
 
     /**
      * Increases the character's level by one and adjusts experience points.
      */
-    public void levelUp() {
+    public void levelUp(Life life, CharacterClass characterClass, Modifier modifiers) {
         this.level += 1;
         this.experiencePoints -= CUMULATIVE_XP_TABLE[this.level - 1];
 
-        for (LevelUpListener listener : listeners) {
-            listener.onLevelUp();
+        if (this.experiencePoints < 0) {
+            this.experiencePoints = 0;
         }
+
+        life.onLevelUp(characterClass, modifiers);
     }
 
     /**
