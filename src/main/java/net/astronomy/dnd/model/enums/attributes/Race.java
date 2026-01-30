@@ -21,7 +21,8 @@ public enum Race {
                     Language.COMMON,
                     Language.DRACONIC
             ),
-            0
+            0,
+            9
     ),
 
     DWARF(
@@ -34,7 +35,8 @@ public enum Race {
                     Language.COMMON,
                     Language.DWARVISH
             ),
-            0
+            0,
+            7.5
     ),
 
     ELF(
@@ -48,7 +50,8 @@ public enum Race {
                     Language.COMMON,
                     Language.ELVISH
             ),
-            0
+            0,
+            9
     ),
 
     GNOME(
@@ -62,7 +65,8 @@ public enum Race {
                     Language.COMMON,
                     Language.GNOMISH
             ),
-            0
+            0,
+            7.5
     ),
 
     HALF_ELF(
@@ -75,7 +79,8 @@ public enum Race {
                     Language.COMMON,
                     Language.ELVISH
             ),
-            1
+            1,
+            9
     ),
 
     HALF_ORC(
@@ -88,7 +93,8 @@ public enum Race {
                     Language.COMMON,
                     Language.ORC
             ),
-            0
+            0,
+            9
     ),
 
     HALFLING(
@@ -101,7 +107,8 @@ public enum Race {
                     Language.COMMON,
                     Language.HALFLING
             ),
-            0
+            0,
+            7.5
     ),
 
     HUMAN(
@@ -117,7 +124,8 @@ public enum Race {
             Set.of(
                     Language.COMMON
             ),
-            1
+            1,
+            9
     ),
 
     ORC(
@@ -130,7 +138,8 @@ public enum Race {
                     Language.ORC,
                     Language.COMMON
             ),
-            0
+            0,
+            9
     ),
 
     TIEFLING(
@@ -143,19 +152,22 @@ public enum Race {
                     Language.COMMON,
                     Language.INFERNAL
             ),
-            0
+            0,
+            9
     );
 
     private final String displayName;
     private final Map<Abilities, Integer> abilityBonuses;
     private final Set<Language> languages;
     private final int extraLanguageChoices;
+    private final double speed; // In meters
 
-    Race(String displayName, Map<Abilities, Integer> abilityBonuses, Set<Language> languages, int extraLanguageChoices) {
+    Race(String displayName, Map<Abilities, Integer> abilityBonuses, Set<Language> languages, int extraLanguageChoices, double speed) {
         this.displayName = displayName;
         this.abilityBonuses = abilityBonuses;
         this.languages = languages;
         this.extraLanguageChoices = extraLanguageChoices;
+        this.speed = speed;
     }
 
     public int getBonus(Abilities abilityName) {
@@ -168,6 +180,10 @@ public enum Race {
 
     public Set<Language> getRaceLanguages() {
         return languages;
+    }
+
+    public double getSpeed() {
+        return speed;
     }
 
     public String getDisplayName() {

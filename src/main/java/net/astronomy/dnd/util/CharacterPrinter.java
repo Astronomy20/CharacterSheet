@@ -19,6 +19,13 @@ public class CharacterPrinter {
         System.out.println("Experience Points: " + character.getExperiencePoints());
         System.out.println();
 
+        System.out.println("--- Life ---");
+        System.out.println("Life points: " + character.getLife().getHitDice());
+        System.out.println("Armor class: " + character.getLife().getArmorClass());
+        System.out.println("Initiative : " + character.getLife().getInitiative());
+        System.out.println("Speed : " + character.getLife().getSpeed());
+        System.out.println();
+
         System.out.println("--- Abilities ---");
         System.out.println("Strength: " + character.getAbilities().getStrength());
         System.out.println("Dexterity: " + character.getAbilities().getDexterity());
@@ -62,11 +69,6 @@ public class CharacterPrinter {
         System.out.println("Sleight of Hand: " + character.getSkills().getSleightOfHand());
         System.out.println("Stealth: " + character.getSkills().getStealth());
         System.out.println("Survival: " + character.getSkills().getSurvival());
-        System.out.println();
-
-        System.out.println("--- Life ---");
-        System.out.println("Life points: " + character.getLifePoints());
-        System.out.println("Armor class: " + character.getArmorClass());
         System.out.println();
 
         System.out.println("--- Languages ---");

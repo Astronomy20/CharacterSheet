@@ -1,6 +1,7 @@
 package net.astronomy.dnd.model.enums.attributes;
 
 import net.astronomy.dnd.model.Modifier.Modifiers;
+import net.astronomy.dnd.util.dice.Dices.Dice;
 
 import java.util.Set;
 
@@ -16,7 +17,8 @@ public enum CharacterClass {
             Set.of(
                     Modifiers.STRENGTH,
                     Modifiers.CONSTITUTION
-            )
+            ),
+            Dice.D12
     ),
 
     BARD(
@@ -24,7 +26,8 @@ public enum CharacterClass {
             Set.of(
                     Modifiers.DEXTERITY,
                     Modifiers.CHARISMA
-            )
+            ),
+            Dice.D8
     ),
 
     CLERIC(
@@ -32,7 +35,8 @@ public enum CharacterClass {
             Set.of(
                     Modifiers.WISDOM,
                     Modifiers.CHARISMA
-            )
+            ),
+            Dice.D8
     ),
 
     DRUID(
@@ -40,7 +44,8 @@ public enum CharacterClass {
             Set.of(
                     Modifiers.INTELLIGENCE,
                     Modifiers.WISDOM
-            )
+            ),
+            Dice.D8
     ),
 
     FIGHTER(
@@ -48,7 +53,8 @@ public enum CharacterClass {
             Set.of(
                     Modifiers.STRENGTH,
                     Modifiers.CONSTITUTION
-            )
+            ),
+            Dice.D10
     ),
 
     MONK(
@@ -56,7 +62,8 @@ public enum CharacterClass {
             Set.of(
                     Modifiers.STRENGTH,
                     Modifiers.DEXTERITY
-            )
+            ),
+            Dice.D8
     ),
 
     PALADIN(
@@ -64,7 +71,8 @@ public enum CharacterClass {
             Set.of(
                     Modifiers.WISDOM,
                     Modifiers.CHARISMA
-            )
+            ),
+            Dice.D10
     ),
 
     RANGER(
@@ -72,7 +80,8 @@ public enum CharacterClass {
             Set.of(
                     Modifiers.STRENGTH,
                     Modifiers.DEXTERITY
-            )
+            ),
+            Dice.D10
     ),
 
     ROGUE(
@@ -80,7 +89,8 @@ public enum CharacterClass {
             Set.of(
                     Modifiers.DEXTERITY,
                     Modifiers.INTELLIGENCE
-            )
+            ),
+            Dice.D8
     ),
 
     SORCERER(
@@ -88,7 +98,8 @@ public enum CharacterClass {
             Set.of(
                     Modifiers.CONSTITUTION,
                     Modifiers.CHARISMA
-            )
+            ),
+            Dice.D6
     ),
 
     WARLOCK(
@@ -96,7 +107,8 @@ public enum CharacterClass {
             Set.of(
                     Modifiers.WISDOM,
                     Modifiers.CHARISMA
-            )
+            ),
+            Dice.D8
     ),
 
     WIZARD(
@@ -104,15 +116,18 @@ public enum CharacterClass {
             Set.of(
                     Modifiers.INTELLIGENCE,
                     Modifiers.WISDOM
-            )
+            ),
+            Dice.D6
     );
 
     private final String displayName;
     private final Set<Modifiers> proficientSavingThrows;
+    private final Dice hitDice;
 
-    CharacterClass(String displayName, Set<Modifiers> proficientSavingThrows) {
+    CharacterClass(String displayName, Set<Modifiers> proficientSavingThrows, Dice hitDice) {
         this.displayName = displayName;
         this.proficientSavingThrows = proficientSavingThrows;
+        this.hitDice = hitDice;
     }
 
     public boolean isProficientIn(Modifiers modifiers) {
@@ -121,6 +136,10 @@ public enum CharacterClass {
 
     public Set<Modifiers> getProficiencyModifiers() {
         return proficientSavingThrows;
+    }
+
+    public Dice getHitDice() {
+        return hitDice;
     }
 
     public String getDisplayName() {

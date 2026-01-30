@@ -1,5 +1,7 @@
 package net.astronomy.dnd.util.dice;
 
+import net.astronomy.dnd.util.dice.Dices.Dice;
+
 import java.util.Arrays;
 import java.util.Random;
 
@@ -27,7 +29,7 @@ public class DiceRoll {
      * @param times the number of times to roll the dice
      * @return a new DiceRoll containing the results
      */
-    public static DiceRoll roll(Dices.Dice dice, int times) {
+    public static DiceRoll roll(Dice dice, int times) {
         int[] roll = new int[times];
         Random random = new Random();
 

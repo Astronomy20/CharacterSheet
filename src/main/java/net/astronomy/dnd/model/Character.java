@@ -40,11 +40,8 @@ public class Character {
     /** The character's skills. */
     private Skills skills;
 
-    /** The character's life points. */
-    private int lifePoints;
-
-    /** The character's skill armor class. */
-    private int armorClass;
+    /** The character's life statistics. */
+    private Life life;
 
     /** Languages known by the character. */
     private Set<Language> languages;
@@ -79,8 +76,7 @@ public class Character {
         this.modifiers = new Modifier(this.level, abilities, this.characterClass);
         this.savingThrows = new SavingThrow(this.modifiers);
         this.skills = new Skills(this.modifiers);
-        this.lifePoints = 10;
-        this.armorClass = 10;
+        this.life = new Life(this.level, this.race, this.characterClass, this.modifiers);
         this.languages = race.getRaceLanguages();
         this.inventory = new Inventory();
         this.currency = new Currency();
@@ -142,13 +138,8 @@ public class Character {
     }
 
     /** @return The character's life points. */
-    public int getLifePoints() {
-        return lifePoints;
-    }
-
-    /** @return The character's armor class. */
-    public int getArmorClass() {
-        return armorClass;
+    public Life getLife() {
+        return life;
     }
 
     /** @return The set of languages known by the character. */
