@@ -1,6 +1,5 @@
 package net.astronomy.dnd.model;
 
-
 /**
  * Represents a character's level and experience.
  * Handles XP gain, leveling up, and proficiency bonus calculation.
