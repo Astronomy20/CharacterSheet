@@ -1,19 +1,20 @@
 package net.astronomy.dnd.model;
 
-import net.astronomy.dnd.model.enums.attributes.CharacterClass;
 
 /**
- * Character's level and experience progression.
- * Handles experience gain, level-ups, and proficiency bonus calculation.
+ * Represents a character's level and experience.
+ * Handles XP gain, leveling up, and proficiency bonus calculation.
  */
 public class Level {
-
+    /** Current character level */
     private int level;
+
+    /** Current experience points */
     private int experiencePoints;
 
     /**
-     * Cumulative experience required to reach each level (1–20).
-     * Index corresponds to the level number - 1.
+     * Cumulative XP required for each level (1–20).
+     * Index = level - 1
      */
     private static final int[] CUMULATIVE_XP_TABLE = {
             0,          // Level 1
@@ -39,92 +40,75 @@ public class Level {
     };
 
     /**
-     * Creates a Level instance with the given level and experience points.
+     * Creates a Level instance.
      *
-     * @param level the character's current level (minimum 1)
-     * @param experiencePoints the current experience points
+     * @param level starting level (≥1)
+     * @param experiencePoints starting XP (≥0)
      */
     public Level(int level, int experiencePoints) {
-        if (level < 1) {
-            throw new IllegalArgumentException("Level must be greater than or equal to 1.");
-        }
-        if (experiencePoints < 0) {
-            throw new IllegalArgumentException("Experience points cannot be negative.");
-        }
+        if (level < 1) throw new IllegalArgumentException("Level must be ≥ 1.");
+        if (experiencePoints < 0) throw new IllegalArgumentException("XP cannot be negative.");
 
         this.level = level;
         this.experiencePoints = experiencePoints;
     }
 
     /**
-     * Adds experience points and levels up the character if enough XP is gained.
+     * Adds XP and levels up if threshold is reached.
      *
-     * @param experiencePoints the amount of XP to add
+     * @param life character life instance
+     * @param experiencePoints XP to add
      */
-    public void addExperiencePoints(Life life, CharacterClass characterClass, Modifier modifiers, int experiencePoints) {
+    public void addExperiencePoints(Life life, int experiencePoints) {
         this.experiencePoints += experiencePoints;
 
         while (this.level < 20 && this.experiencePoints >= CUMULATIVE_XP_TABLE[this.level]) {
-            levelUp(life, characterClass, modifiers);
+            levelUp(life);
         }
     }
 
     /**
-     * Increases the character's level by one and adjusts experience points.
+     * Increases level by one and adjusts XP.
+     *
+     * @param life character life instance
      */
-    public void levelUp(Life life, CharacterClass characterClass, Modifier modifiers) {
+    public void levelUp(Life life) {
         this.level += 1;
         this.experiencePoints -= CUMULATIVE_XP_TABLE[this.level - 1];
 
-        if (this.experiencePoints < 0) {
-            this.experiencePoints = 0;
-        }
+        if (this.experiencePoints < 0) this.experiencePoints = 0;
 
-        life.onLevelUp(characterClass, modifiers);
+        life.onLevelUp();
     }
 
     /**
-     * Returns the experience points required to reach a specific level.
+     * Returns XP required for a specific level.
      *
-     * @param level the target level (1–20)
-     * @return required cumulative XP for the given level
+     * @param level target level (1–20)
+     * @return required XP
      */
     public int getXPRequiredForLevel(int level) {
-        if (level < 1 || level > 20) {
-            throw new IllegalArgumentException("Level must be between 1 and 20.");
-        }
-
+        if (level < 1 || level > 20) throw new IllegalArgumentException("Level must be 1–20.");
         return CUMULATIVE_XP_TABLE[level];
     }
 
     /**
-     * Calculates the proficiency bonus for a given level.
+     * Returns proficiency bonus for a given level.
      *
-     * @param level the character level (1–20)
-     * @return the proficiency bonus
+     * @param level character level (1–20)
+     * @return proficiency bonus
      */
     public int getProficiencyBonus(int level) {
-        if (level < 1 || level > 20) {
-            throw new IllegalArgumentException("Level must be between 1 and 20.");
-        }
-
+        if (level < 1 || level > 20) throw new IllegalArgumentException("Level must be 1–20.");
         return 2 + (int) Math.floor((level - 1) / 4.0);
     }
 
-    /**
-     * Returns the current character level.
-     *
-     * @return current level
-     */
+    /** Returns current level */
     public int getLevel() {
         return level;
     }
 
-    /**
-     * Returns the current experience points.
-     *
-     * @return current XP
-     */
+    /** Returns current XP */
     public int getExperiencePoints() {
         return experiencePoints;
     }

@@ -7,185 +7,223 @@ import java.util.EnumMap;
 import java.util.Map;
 
 /**
- * Character's inventory.
- * Items are categorized into Armors, Weapons, Adventure Gear, Instruments, and Miscellaneous items.
- * Quantities are tracked for each item type.
+ * Represents a character's inventory.
+ * Items are categorized and their quantities tracked.
  */
 public class Inventory {
-    /** Map storing Armor items and their quantities */
+    /** Armor items and quantities */
     private final Map<Armor, Integer> armors;
 
-    /** Map storing Weapon items and their quantities */
+    /** Weapon items and quantities */
     private final Map<Weapon, Integer> weapons;
 
-    /** Map storing Adventure Gear items and their quantities */
+    /** Adventure gear items and quantities */
     private final Map<AdventureGear, Integer> adventureGear;
 
-    /** Map storing Instrument items and their quantities */
+    /** Instrument items and quantities */
     private final Map<Instrument, Integer> instruments;
 
-    /** Map storing Miscellaneous items and their quantities */
+    /** Miscellaneous items and quantities */
     private final Map<Miscellaneous, Integer> miscellaneous;
 
-    /**
-     * Constructs an empty Inventory with all categories initialized.
-     */
+    /** Currently worn body armor (null if none) */
+    private Armor wornArmor;
+
+    /** Currently equipped shield (null if none) */
+    private Armor equippedShield;
+
+    /** Creates an empty inventory */
     public Inventory() {
         armors = new EnumMap<>(Armor.class);
         weapons = new EnumMap<>(Weapon.class);
         adventureGear = new EnumMap<>(AdventureGear.class);
         instruments = new EnumMap<>(Instrument.class);
         miscellaneous = new EnumMap<>(Miscellaneous.class);
+
+        wornArmor = null;
+        equippedShield = null;
     }
 
-    /**
-     * Adds a specified quantity of an Armor item to the inventory.
-     *
-     * @param armor the Armor item to add
-     * @param quantity the number of items to add
-     */
+    /** Adds an item to a map */
+    private <T extends Enum<T>> void addItem(Map<T, Integer> map, T item, int quantity) {
+        if (quantity <= 0) {
+            System.out.println("Warning: Attempted to add non-positive quantity of " + item);
+            return;
+        }
+        map.put(item, map.getOrDefault(item, 0) + quantity);
+    }
+
+    /** Removes an item from a map */
+    private <T extends Enum<T>> boolean removeItem(Map<T, Integer> map, T item, int quantity) {
+        if (quantity <= 0) {
+            System.out.println("Warning: Attempted to remove non-positive quantity of " + item);
+            return false;
+        }
+
+        int current = map.getOrDefault(item, 0);
+        if (current < quantity) {
+            System.out.println("Warning: Attempted to remove " + quantity + " of " + item +
+                    " but only " + current + " available.");
+            return false;
+        }
+
+        if (current == quantity) {
+            map.remove(item);
+        } else {
+            map.put(item, current - quantity);
+        }
+
+        return true;
+    }
+
+    /** Wear a body armor (not a shield) */
+    public void wearArmor(Armor armor, Life life) {
+        if (armor == Armor.SHIELD) {
+            System.out.println("Use equipShield() to equip a shield.");
+        }
+
+        if (armors.getOrDefault(armor, 0) <= 0) {
+            System.out.println("Cannot wear armor not present in inventory: " + armor);
+        }
+
+        wornArmor = armor;
+        life.updateArmorClass();
+    }
+
+    /** Remove currently worn armor */
+    public void removeArmor(Life life) {
+        if (wornArmor == null) {
+            System.out.println("No armor is currently worn.");
+        }
+
+        wornArmor = null;
+        life.updateArmorClass();
+    }
+
+    /** Equip a shield */
+    public void equipShield(Armor armor, Life life) {
+        if (armors.getOrDefault(Armor.SHIELD, 0) <= 0) {
+            System.out.println("No shield available in inventory.");
+        }
+
+        equippedShield = armor;
+        life.updateArmorClass();
+    }
+
+    /** Unequip the shield */
+    public void unequipShield(Life life) {
+        if (equippedShield == null) {
+            System.out.println("No shield is currently equipped.");
+        }
+
+        equippedShield = null;
+        life.updateArmorClass();
+    }
+
+    /** Add armor to inventory */
     public void addArmor(Armor armor, int quantity) {
-        armors.put(armor, armors.getOrDefault(armor, 0) + quantity);
+        addItem(armors, armor, quantity);
     }
 
-    /**
-     * Adds a specified quantity of a Weapon item to the inventory.
-     *
-     * @param weapon the Weapon item to add
-     * @param quantity the number of items to add
-     */
+    /** Add weapon to inventory */
     public void addWeapon(Weapon weapon, int quantity) {
-        weapons.put(weapon, weapons.getOrDefault(weapon, 0) + quantity);
+        addItem(weapons, weapon, quantity);
     }
 
-    /**
-     * Adds a specified quantity of Adventure Gear to the inventory.
-     *
-     * @param gear the Adventure Gear item to add
-     * @param quantity the number of items to add
-     */
+    /** Add adventure gear to inventory */
     public void addAdventureGear(AdventureGear gear, int quantity) {
-        adventureGear.put(gear, adventureGear.getOrDefault(gear, 0) + quantity);
+        addItem(adventureGear, gear, quantity);
     }
 
-    /**
-     * Adds a specified quantity of an Instrument to the inventory.
-     *
-     * @param instrument the Instrument item to add
-     * @param quantity the number of items to add
-     */
+    /** Add instrument to inventory */
     public void addInstrument(Instrument instrument, int quantity) {
-        instruments.put(instrument, instruments.getOrDefault(instrument, 0) + quantity);
+        addItem(instruments, instrument, quantity);
     }
 
-    /**
-     * Adds a specified quantity of a Miscellaneous item to the inventory.
-     *
-     * @param misc the Miscellaneous item to add
-     * @param quantity the number of items to add
-     */
+    /** Add miscellaneous item to inventory */
     public void addMiscellaneous(Miscellaneous misc, int quantity) {
-        miscellaneous.put(misc, miscellaneous.getOrDefault(misc, 0) + quantity);
+        addItem(miscellaneous, misc, quantity);
     }
 
-    /**
-     * Removes a specified quantity of an Armor item from the inventory.
-     *
-     * @param armor the Armor item to remove
-     * @param quantity the number of items to remove
-     * @return true if the removal was successful, false if not enough items
-     */
+    /** Remove armor from inventory */
     public boolean removeArmor(Armor armor, int quantity) {
         return removeItem(armors, armor, quantity);
     }
 
-    /**
-     * Removes a specified quantity of a Weapon item from the inventory.
-     *
-     * @param weapon the Weapon item to remove
-     * @param quantity the number of items to remove
-     * @return true if the removal was successful, false if not enough items
-     */
+    /** Remove weapon from inventory */
     public boolean removeWeapon(Weapon weapon, int quantity) {
         return removeItem(weapons, weapon, quantity);
     }
 
-    /**
-     * Removes a specified quantity of Adventure Gear from the inventory.
-     *
-     * @param gear the Adventure Gear item to remove
-     * @param quantity the number of items to remove
-     * @return true if the removal was successful, false if not enough items
-     */
+    /** Remove adventure gear from inventory */
     public boolean removeAdventureGear(AdventureGear gear, int quantity) {
         return removeItem(adventureGear, gear, quantity);
     }
 
-    /**
-     * Removes a specified quantity of an Instrument from the inventory.
-     *
-     * @param instrument the Instrument item to remove
-     * @param quantity the number of items to remove
-     * @return true if the removal was successful, false if not enough items
-     */
+    /** Remove instrument from inventory */
     public boolean removeInstrument(Instrument instrument, int quantity) {
         return removeItem(instruments, instrument, quantity);
     }
 
-    /**
-     * Removes a specified quantity of a Miscellaneous item from the inventory.
-     *
-     * @param misc the Miscellaneous item to remove
-     * @param quantity the number of items to remove
-     * @return true if the removal was successful, false if not enough items
-     */
+    /** Remove miscellaneous item from inventory */
     public boolean removeMiscellaneous(Miscellaneous misc, int quantity) {
         return removeItem(miscellaneous, misc, quantity);
     }
 
-    /**
-     * Generic helper method to remove items from a map, ensuring quantity does not go negative.
-     *
-     * @param map the map containing items and their quantities
-     * @param item the item to remove
-     * @param quantity the quantity to remove
-     * @param <T> the type of Enum representing the item
-     * @return true if the removal was successful, false if not enough quantity
-     */
-    private <T extends Enum<T>> boolean removeItem(Map<T, Integer> map, T item, int quantity) {
-        int current = map.getOrDefault(item, 0);
-        if (current < quantity) {
-            System.out.println("Warning: Attempted to remove " + quantity + " of " + item +
-                                " but only " + current + " available.");
-            return false;
-        }
-        if (current == quantity) map.remove(item);
-        else map.put(item, current - quantity);
-        return true;
+    /** Return an unmodifiable view of a map */
+    private <T extends Enum<T>> Map<T, Integer> getItems(Map<T, Integer> map) {
+        return Collections.unmodifiableMap(map);
     }
 
-    /** @return an unmodifiable map of Armor items and quantities */
+    /** Get all armors */
     public Map<Armor, Integer> getArmors() {
-        return Collections.unmodifiableMap(armors);
+        return getItems(armors);
     }
 
-    /** @return an unmodifiable map of Weapon items and quantities */
+    /** Get all weapons */
     public Map<Weapon, Integer> getWeapons() {
-        return Collections.unmodifiableMap(weapons);
+        return getItems(weapons);
     }
 
-    /** @return an unmodifiable map of Adventure Gear items and quantities */
+    /** Get all adventure gear */
     public Map<AdventureGear, Integer> getAdventureGear() {
-        return Collections.unmodifiableMap(adventureGear);
+        return getItems(adventureGear);
     }
 
-    /** @return an unmodifiable map of Instruments and quantities */
+    /** Get all instruments */
     public Map<Instrument, Integer> getInstruments() {
-        return Collections.unmodifiableMap(instruments);
+        return getItems(instruments);
     }
 
-    /** @return an unmodifiable map of Miscellaneous items and quantities */
+    /** Get all miscellaneous items */
     public Map<Miscellaneous, Integer> getMiscellaneous() {
-        return Collections.unmodifiableMap(miscellaneous);
+        return getItems(miscellaneous);
+    }
+
+    /** Get quantity of a specific item */
+    public <T extends Enum<T>> int getQuantity(Map<T, Integer> map, T item) {
+        return map.getOrDefault(item, 0);
+    }
+
+    /** Get currently worn armor */
+    public Armor getWornArmor() {
+        return wornArmor;
+    }
+
+    /** Get defense provided by worn armor */
+    public int getWearingArmorDefence(Armor armor, Modifier modifiers) {
+        if (armor == null) return 0;
+        return armor.getArmorDefence(modifiers);
+    }
+
+    /** Get currently equipped shield */
+    public Armor getEquippedShield() {
+        return equippedShield;
+    }
+
+    /** Get defense provided by equipped shield */
+    public int getEquippedShieldDefence(Armor armor, Modifier modifiers) {
+        if (equippedShield == null) return 0;
+        return armor.getArmorDefence(modifiers);
     }
 }

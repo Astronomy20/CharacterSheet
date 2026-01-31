@@ -73,10 +73,10 @@ public class Character {
         this.modifiers = new Modifier(this.level, abilities, this.characterClass);
         this.savingThrows = new SavingThrow(this.modifiers);
         this.skills = new Skills(this.modifiers);
-        this.life = new Life(this.level, this.race, this.characterClass, this.modifiers);
-        this.languages = race.getRaceLanguages();
         this.inventory = new Inventory();
         this.currency = new Currency();
+        this.languages = race.getRaceLanguages();
+        this.life = new Life(this.level, this.race, this.characterClass, this.modifiers, this.inventory);
     }
 
     /** @return The character's name. */
