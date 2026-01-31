@@ -2,7 +2,7 @@ package net.astronomy.dnd.model.enums.equipment;
 
 import net.astronomy.dnd.model.Modifier;
 
-public enum Armor {
+public enum Armors {
     // Light Armor
     PADDED(
             "Padded",
@@ -80,7 +80,7 @@ public enum Armor {
     private final int armorDefence;
     private final int dexCap;
 
-    Armor(String displayName, int armorDefence, int dexCap) {
+    Armors(String displayName, int armorDefence, int dexCap) {
         this.displayName = displayName;
         this.armorDefence = armorDefence;
         this.dexCap = dexCap;

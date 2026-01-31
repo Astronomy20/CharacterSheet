@@ -1,0 +1,112 @@
+package net.astronomy.dnd.model.enums.equipment;
+
+public enum AdventureGears {
+
+    ABACUS("Abacus"),
+    CLOTHES_COMMON("Clothes, Common"),
+    CLOTHES_COSTUME("Clothes, Costume"),
+    CLOTHES_TRAVELER("Clothes, Traveler's"),
+    CLOTHES_FINE("Clothes, Fine"),
+    TINDERBOX("Tinderbox"),
+    ACID_VIAL("Acid (vial)"),
+    HOLY_WATER_FLASK("Holy Water (flask)"),
+    FLASK_OR_TANKARD("Flask or Tankard"),
+    SIGNET_RING("Signet Ring"),
+    ANTITOXIN_VIAL("Antitoxin (vial)"),
+    RAM_PORTABLE("Ram, Portable"),
+    POLE_10FT("Pole (10-foot)"),
+    CLIMBERS_KIT("Climber's Kit"),
+    BARREL("Barrel"),
+    MERCHANTS_SCALE("Merchant's Scale"),
+    POUCH("Pouch"),
+    HEALERS_KIT("Healer's Kit"),
+    COMPONENT_POUCH("Component Pouch"),
+    GLASS_BOTTLE("Glass Bottle"),
+    JUG_OR_PITCHER("Jug or Pitcher"),
+    BELL("Bell"),
+    CANDLE("Candle"),
+    BASKET("Basket"),
+    FISHING_TACKLE("Fishing Tackle"),
+    SPYGLASS("Spyglass"),
+    BLOCK_AND_TACKLE("Block and Tackle"),
+    PAPER("Paper (one sheet)"),
+    CHAIN_10FT("Chain (10-foot)"),
+    SEALING_WAX("Sealing Wax"),
+    PITON("Piton"),
+    HOURGLASS("Hourglass"),
+    BLANKET("Blanket"),
+    ROPE_HEMPEN("Rope, Hempen (50 feet)"),
+    ROPE_SILK("Rope, Silk (50 feet)"),
+    WHETSTONE("Whetstone"),
+    CASE_MAP_SCROLL("Case, Map or Scroll"),
+    CASE_CROSSBOW_BOLT("Case, Crossbow Bolt"),
+    QUIVER("Quiver"),
+    VIAL("Vial"),
+    SIGNAL_WHISTLE("Signal Whistle"),
+    CHEST("Chest"),
+    ALCHEMISTS_FIRE("Alchemist's Fire (flask)"),
+    MESS_KIT("Mess Kit"),
+    CHALK("Chalk (1 piece)"),
+    BEDROLL("Bedroll"),
+    INK_BOTTLE("Ink (1 ounce bottle)"),
+    LAMP("Lamp"),
+    LANTERN_BULLSEYE("Lantern, Bullseye"),
+    LANTERN_HOOD("Lantern, Hooded"),
+    MAGNIFYING_GLASS("Magnifying Glass"),
+    BOOK("Book"),
+    SPELLBOOK("Spellbook"),
+    MANACLES("Manacles"),
+    HAMMER("Hammer"),
+    SLEDGEHAMMER("Sledgehammer"),
+    OIL_FLASK("Oil (flask)"),
+    WATERSKIN("Waterskin"),
+    INK_PEN("Ink Pen"),
+    PARCHMENT("Parchment (one sheet)"),
+    MINERS_PICK("Pick, Miner's"),
+    CROWBAR("Crowbar"),
+    POTION_HEALING("Potion of Healing"),
+    PERFUME_VIAL("Perfume (vial)"),
+    GRAPPLING_HOOK("Grappling Hook"),
+    RATIONS("Rations (1 day)"),
+    SACK("Sack"),
+    SOAP("Soap"),
+    LADDER_10FT("Ladder (10-foot)"),
+    BUCKET("Bucket"),
+    LOCK("Lock"),
+    BALL_BEARINGS("Ball Bearings (bag of 1,000)"),
+    MIRROR_STEEL("Mirror, Steel"),
+    SPIKES_IRON("Spikes, Iron (10)"),
+    HUNTING_TRAP("Hunting Trap"),
+    TENT_TWO_PERSON("Tent, Two-person"),
+    TORCH("Torch"),
+    CALTROPS("Caltrops (bag of 20)"),
+    SHOVEL("Shovel"),
+    POT_IRON("Pot, Iron"),
+    POISON_BASIC_VIAL("Poison, Basic (vial)"),
+    ROBES("Robes"),
+    BACKPACK("Backpack"),
+    WAND("Wand"),
+    STAFF("Staff"),
+    CRYSTAL("Crystal"),
+    ORB("Orb"),
+    ROD("Rod"),
+    YEW_WAND("Yew Wand"),
+    WOODEN_STAFF("Wooden Staff"),
+    SPRIG_MISTLETOE("Sprig of Mistletoe"),
+    TOTEM("Totem");
+
+    private final String displayName;
+
+    AdventureGears(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    @Override
+    public String toString() {
+        return displayName;
+    }
+}

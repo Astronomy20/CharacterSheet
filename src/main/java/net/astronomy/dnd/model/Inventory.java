@@ -12,32 +12,32 @@ import java.util.Map;
  */
 public class Inventory {
     /** Armor items and quantities */
-    private final Map<Armor, Integer> armors;
+    private final Map<Armors, Integer> armors;
 
     /** Weapon items and quantities */
-    private final Map<Weapon, Integer> weapons;
+    private final Map<Weapons, Integer> weapons;
 
     /** Adventure gear items and quantities */
-    private final Map<AdventureGear, Integer> adventureGear;
+    private final Map<AdventureGears, Integer> adventureGear;
 
     /** Instrument items and quantities */
-    private final Map<Instrument, Integer> instruments;
+    private final Map<Instruments, Integer> instruments;
 
     /** Miscellaneous items and quantities */
     private final Map<Miscellaneous, Integer> miscellaneous;
 
     /** Currently worn body armor (null if none) */
-    private Armor wornArmor;
+    private Armors wornArmor;
 
     /** Currently equipped shield (null if none) */
-    private Armor equippedShield;
+    private Armors equippedShield;
 
     /** Creates an empty inventory */
     public Inventory() {
-        armors = new EnumMap<>(Armor.class);
-        weapons = new EnumMap<>(Weapon.class);
-        adventureGear = new EnumMap<>(AdventureGear.class);
-        instruments = new EnumMap<>(Instrument.class);
+        armors = new EnumMap<>(Armors.class);
+        weapons = new EnumMap<>(Weapons.class);
+        adventureGear = new EnumMap<>(AdventureGears.class);
+        instruments = new EnumMap<>(Instruments.class);
         miscellaneous = new EnumMap<>(Miscellaneous.class);
 
         wornArmor = null;
@@ -77,8 +77,8 @@ public class Inventory {
     }
 
     /** Wear a body armor (not a shield) */
-    public void wearArmor(Armor armor, Life life) {
-        if (armor == Armor.SHIELD) {
+    public void wearArmor(Armors armor, Life life) {
+        if (armor == Armors.SHIELD) {
             System.out.println("Use equipShield() to equip a shield.");
         }
 
@@ -101,8 +101,8 @@ public class Inventory {
     }
 
     /** Equip a shield */
-    public void equipShield(Armor armor, Life life) {
-        if (armors.getOrDefault(Armor.SHIELD, 0) <= 0) {
+    public void equipShield(Armors armor, Life life) {
+        if (armors.getOrDefault(Armors.SHIELD, 0) <= 0) {
             System.out.println("No shield available in inventory.");
         }
 
@@ -121,22 +121,22 @@ public class Inventory {
     }
 
     /** Add armor to inventory */
-    public void addArmor(Armor armor, int quantity) {
+    public void addArmor(Armors armor, int quantity) {
         addItem(armors, armor, quantity);
     }
 
     /** Add weapon to inventory */
-    public void addWeapon(Weapon weapon, int quantity) {
+    public void addWeapon(Weapons weapon, int quantity) {
         addItem(weapons, weapon, quantity);
     }
 
     /** Add adventure gear to inventory */
-    public void addAdventureGear(AdventureGear gear, int quantity) {
+    public void addAdventureGear(AdventureGears gear, int quantity) {
         addItem(adventureGear, gear, quantity);
     }
 
     /** Add instrument to inventory */
-    public void addInstrument(Instrument instrument, int quantity) {
+    public void addInstrument(Instruments instrument, int quantity) {
         addItem(instruments, instrument, quantity);
     }
 
@@ -146,22 +146,22 @@ public class Inventory {
     }
 
     /** Remove armor from inventory */
-    public boolean removeArmor(Armor armor, int quantity) {
+    public boolean removeArmor(Armors armor, int quantity) {
         return removeItem(armors, armor, quantity);
     }
 
     /** Remove weapon from inventory */
-    public boolean removeWeapon(Weapon weapon, int quantity) {
+    public boolean removeWeapon(Weapons weapon, int quantity) {
         return removeItem(weapons, weapon, quantity);
     }
 
     /** Remove adventure gear from inventory */
-    public boolean removeAdventureGear(AdventureGear gear, int quantity) {
+    public boolean removeAdventureGear(AdventureGears gear, int quantity) {
         return removeItem(adventureGear, gear, quantity);
     }
 
     /** Remove instrument from inventory */
-    public boolean removeInstrument(Instrument instrument, int quantity) {
+    public boolean removeInstrument(Instruments instrument, int quantity) {
         return removeItem(instruments, instrument, quantity);
     }
 
@@ -176,22 +176,22 @@ public class Inventory {
     }
 
     /** Get all armors */
-    public Map<Armor, Integer> getArmors() {
+    public Map<Armors, Integer> getArmors() {
         return getItems(armors);
     }
 
     /** Get all weapons */
-    public Map<Weapon, Integer> getWeapons() {
+    public Map<Weapons, Integer> getWeapons() {
         return getItems(weapons);
     }
 
     /** Get all adventure gear */
-    public Map<AdventureGear, Integer> getAdventureGear() {
+    public Map<AdventureGears, Integer> getAdventureGear() {
         return getItems(adventureGear);
     }
 
     /** Get all instruments */
-    public Map<Instrument, Integer> getInstruments() {
+    public Map<Instruments, Integer> getInstruments() {
         return getItems(instruments);
     }
 
@@ -206,23 +206,23 @@ public class Inventory {
     }
 
     /** Get currently worn armor */
-    public Armor getWornArmor() {
+    public Armors getWornArmor() {
         return wornArmor;
     }
 
     /** Get defense provided by worn armor */
-    public int getWearingArmorDefence(Armor armor, Modifier modifiers) {
+    public int getWearingArmorDefence(Armors armor, Modifier modifiers) {
         if (armor == null) return 0;
         return armor.getArmorDefence(modifiers);
     }
 
     /** Get currently equipped shield */
-    public Armor getEquippedShield() {
+    public Armors getEquippedShield() {
         return equippedShield;
     }
 
     /** Get defense provided by equipped shield */
-    public int getEquippedShieldDefence(Armor armor, Modifier modifiers) {
+    public int getEquippedShieldDefence(Armors armor, Modifier modifiers) {
         if (equippedShield == null) return 0;
         return armor.getArmorDefence(modifiers);
     }
