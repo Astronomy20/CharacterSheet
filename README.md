@@ -80,38 +80,6 @@ java -jar target/CharacterSheet.jar
 6. Ability scores are automatically rolled
 7. Character is saved and displayed
 
-### Programmatic Usage
-
-You can also create characters programmatically:
-
-```java
-import net.astronomy.dnd.model.*;
-import net.astronomy.dnd.model.enums.attributes.*;
-import net.astronomy.dnd.util.CharacterPrinter;
-import net.astronomy.dnd.util.Session;
-import net.astronomy.dnd.util.dice.Dices;
-
-// Create a new character
-Character warrior = new Character(
-        "Thorin",
-        new Level(1, 0),
-        Race.DWARF,
-        CharacterClass.FIGHTER,
-        Background.SOLDIER,
-        Alignment.LAWFUL_GOOD,
-        new Ability(15, 14, 16, 10, 12, 8)
-);
-
-// Display character sheet
-CharacterPrinter.print(warrior);
-
-// Save character
-Session.saveCharacter(warrior);
-
-// Load character
-Character loaded = Session.loadCharacter("Thorin Ironforge");
-```
-
 ## Project Structure
 
 ```
