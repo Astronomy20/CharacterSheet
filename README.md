@@ -192,9 +192,6 @@ saves/Thorin_Ironforge.json
 # Compile
 mvn compile
 
-# Run tests (if available)
-mvn test
-
 # Package
 mvn package
 
