@@ -8,7 +8,10 @@ import net.astronomy.dnd.model.enums.attributes.CharacterClass;
 import net.astronomy.dnd.model.enums.attributes.Race;
 import net.astronomy.dnd.model.Level;
 import net.astronomy.dnd.util.CharacterPrinter;
+import net.astronomy.dnd.util.Session;
 import net.astronomy.dnd.util.dice.Dices;
+
+import java.io.IOException;
 
 
 public class ExampleSheetTerminalNoUI {
@@ -28,9 +31,14 @@ public class ExampleSheetTerminalNoUI {
                         Dices.getAbilitiesValueRolls()[3],
                         Dices.getAbilitiesValueRolls()[4],
                         Dices.getAbilitiesValueRolls()[5])
-//                new Ability(15, 15, 15, 15, 15, 15)
         );
 
         CharacterPrinter.print(padre_mateo);
+
+        try {
+            Session.saveCharacter(padre_mateo);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
