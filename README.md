@@ -108,8 +108,8 @@ CharacterPrinter.print(warrior);
 // Save character
 Session.saveCharacter(warrior);
 
-        // Load character
-        Character loaded = Session.loadCharacter("Thorin Ironforge");
+// Load character
+Character loaded = Session.loadCharacter("Thorin Ironforge");
 ```
 
 ## Project Structure
@@ -220,10 +220,6 @@ Potential features for future development:
 - Combat encounter simulator
 - Character export to PDF
 - Web-based UI
-
-## License
-
-All Rights Reserved - Copyright © 2026 Astronomy20
 
 ## Acknowledgments
 
