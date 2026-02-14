@@ -13,8 +13,11 @@ public class Life {
     /** Character's hit dice */
     private Dice hitDice;
 
+    /** Max life points */
+    private int maxLifePoints;
+
     /** Current life points */
-    private int lifePoints;
+    private int currentLifePoints;
 
     /** Current armor class */
     private int armorClass;
@@ -39,7 +42,8 @@ public class Life {
      */
     public Life(Level level, Race race, CharacterClass characterClass, Modifier modifiers, Inventory inventory) {
         this.hitDice = characterClass.getHitDice();
-        this.lifePoints = characterClass.getHitDice().getSides() + modifiers.getConstitution();
+        this.maxLifePoints = characterClass.getHitDice().getSides() + modifiers.getConstitution();
+        this.currentLifePoints = maxLifePoints;
         this.armorClass = 10 + modifiers.getDexterity()
                 + inventory.getWearingArmorDefence(inventory.getWornArmor(), modifiers)
                 + inventory.getEquippedShieldDefence(inventory.getEquippedShield(), modifiers);
@@ -53,15 +57,15 @@ public class Life {
 
     /** Called on level-up to add life points based on hit dice and Constitution */
     public void onLevelUp() {
-        addLifePoints(
+        updateMaxLifePoints(
                 DiceRoll.roll(characterClass.getHitDice(), 1).total()
                         + modifiers.getConstitution()
         );
     }
 
-    /** Adds life points */
-    public void addLifePoints(int points) {
-        this.lifePoints += points;
+    /** Updates max life points */
+    public void updateMaxLifePoints(int points) {
+        this.maxLifePoints += points;
     }
 
     /** Updates armor class based on Dexterity, armor, and shield */
@@ -71,14 +75,34 @@ public class Life {
                 + this.inventory.getEquippedShieldDefence(this.inventory.getEquippedShield(), this.modifiers);
     }
 
+    /** Sets current life points with bounds checking */
+    private void setCurrentLifePoints(int value) {
+        this.currentLifePoints = Math.max(0, Math.min(value, maxLifePoints));
+    }
+
+    /** Adds life points */
+    public void addLifePoints(int points) {
+        setCurrentLifePoints(this.currentLifePoints + points);
+    }
+
+    /** Removes life points */
+    public void removeLifePoints(int points) {
+        setCurrentLifePoints(this.currentLifePoints - points);
+    }
+
     /** Returns hit dice */
     public Dice getHitDice() {
         return hitDice;
     }
 
+    /** Returns max life points */
+    public int getMaxLifePoints() {
+        return maxLifePoints;
+    }
+
     /** Returns current life points */
-    public int getLifePoints() {
-        return lifePoints;
+    public int getCurrentLifePoints() {
+        return currentLifePoints;
     }
 
     /** Returns current armor class */

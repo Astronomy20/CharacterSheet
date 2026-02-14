@@ -20,7 +20,8 @@ public class CharacterPrinter {
         System.out.println();
 
         System.out.println("--- Life ---");
-        System.out.println("Life points: " + character.getLife().getLifePoints());
+        System.out.println("Max Life points: " + character.getLife().getMaxLifePoints());
+        System.out.println("Current Life points: " + character.getLife().getCurrentLifePoints());
         System.out.println("Hit Dice: " + character.getLife().getHitDice());
         System.out.println("Armor class: " + character.getLife().getArmorClass());
         System.out.println("Initiative : " + character.getLife().getInitiative());
