@@ -85,11 +85,11 @@ java -jar target/CharacterSheet.jar
 You can also create characters programmatically:
 
 ```java
-
-import net.astronomy.dnd.model.attributes.Ability;
-import net.astronomy.dnd.model.attributes.Level;
+import net.astronomy.dnd.model.*;
 import net.astronomy.dnd.model.enums.attributes.*;
+import net.astronomy.dnd.util.CharacterPrinter;
 import net.astronomy.dnd.util.Session;
+import net.astronomy.dnd.util.dice.Dices;
 
 // Create a new character
 Character warrior = new Character(
@@ -103,17 +103,13 @@ Character warrior = new Character(
 );
 
 // Display character sheet
-CharacterPrinter.
-
-        print(warrior);
+CharacterPrinter.print(warrior);
 
 // Save character
-Session.
+Session.saveCharacter(warrior);
 
-        saveCharacter(warrior);
-
-        // Load character
-        Character loaded = Session.loadCharacter("Thorin Ironforge");
+// Load character
+Character loaded = Session.loadCharacter("Thorin Ironforge");
 ```
 
 ## Project Structure
