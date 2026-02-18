@@ -1,6 +1,6 @@
 package net.astronomy.dnd.model.enums.attributes;
 
-import net.astronomy.dnd.model.Ability.Abilities;
+import net.astronomy.dnd.model.attributes.Ability.Abilities;
 
 import java.util.Map;
 import java.util.Set;

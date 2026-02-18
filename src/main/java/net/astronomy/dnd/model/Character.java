@@ -1,7 +1,9 @@
 package net.astronomy.dnd.model;
 
+import net.astronomy.dnd.model.attributes.*;
 import net.astronomy.dnd.model.enums.attributes.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -77,6 +79,62 @@ public class Character {
         this.currency = new Currency();
         this.languages = race.getRaceLanguages();
         this.life = new Life(this.level, this.race, this.characterClass, this.modifiers, this.inventory);
+    }
+
+    public void setRace(Race newRace) {
+        if (newRace == null) {
+            throw new IllegalArgumentException("Race cannot be null.");
+        }
+
+        if (this.race != null) {
+            this.abilities = new Ability(
+                    this.abilities.getStrength() - this.race.getBonus(Ability.Abilities.STRENGTH),
+                    this.abilities.getDexterity() - this.race.getBonus(Ability.Abilities.DEXTERITY),
+                    this.abilities.getConstitution() - this.race.getBonus(Ability.Abilities.CONSTITUTION),
+                    this.abilities.getIntelligence() - this.race.getBonus(Ability.Abilities.INTELLIGENCE),
+                    this.abilities.getWisdom() - this.race.getBonus(Ability.Abilities.WISDOM),
+                    this.abilities.getCharisma() - this.race.getBonus(Ability.Abilities.CHARISMA)
+            );
+
+            int oldConBonus = this.race.getBonus(Ability.Abilities.CONSTITUTION);
+            if (this.life != null) {
+                int totalLevels = this.life.getHpPerLevel().size() + 1;
+                this.life.setMaxLifePoints(this.life.getMaxLifePoints() - (oldConBonus * totalLevels));
+                this.life.setCurrentLifePoints(Math.min(this.life.getCurrentLifePoints(), this.life.getMaxLifePoints()));
+            }
+        }
+
+        this.race = newRace;
+
+        this.abilities = new Ability(
+                this.abilities.getStrength() + newRace.getBonus(Ability.Abilities.STRENGTH),
+                this.abilities.getDexterity() + newRace.getBonus(Ability.Abilities.DEXTERITY),
+                this.abilities.getConstitution() + newRace.getBonus(Ability.Abilities.CONSTITUTION),
+                this.abilities.getIntelligence() + newRace.getBonus(Ability.Abilities.INTELLIGENCE),
+                this.abilities.getWisdom() + newRace.getBonus(Ability.Abilities.WISDOM),
+                this.abilities.getCharisma() + newRace.getBonus(Ability.Abilities.CHARISMA)
+        );
+
+        this.life.updateSpeed(newRace.getSpeed());
+
+        this.languages = new HashSet<>(newRace.getRaceLanguages());
+        this.languages.clear();
+        this.languages.addAll(newRace.getRaceLanguages());
+    }
+
+
+    public void setCharacterClass(CharacterClass characterClass) {
+        this.characterClass = characterClass;
+
+        this.modifiers = new Modifier(this.level, this.abilities, this.characterClass);
+    }
+
+    public void setAlignment(Alignment alignment) {
+        this.alignment = alignment;
+    }
+
+    public void setBackground(Background background) {
+        this.background = background;
     }
 
     /** @return The character's name. */

@@ -1,13 +1,14 @@
 package net.astronomy.dnd;
 
 import net.astronomy.dnd.model.Character;
-import net.astronomy.dnd.model.Ability;
-import net.astronomy.dnd.model.Level;
+import net.astronomy.dnd.model.attributes.Ability;
+import net.astronomy.dnd.model.attributes.Level;
 import net.astronomy.dnd.model.enums.attributes.Alignment;
 import net.astronomy.dnd.model.enums.attributes.Background;
 import net.astronomy.dnd.model.enums.attributes.CharacterClass;
 import net.astronomy.dnd.model.enums.attributes.Race;
 import net.astronomy.dnd.ui.CliAttributesSelector;
+import net.astronomy.dnd.ui.CliCharacterInteraction;
 import net.astronomy.dnd.ui.CliSelector;
 import net.astronomy.dnd.ui.CliSessionSelector;
 import net.astronomy.dnd.util.CharacterPrinter;
@@ -37,12 +38,22 @@ public class CharacterSheetTerminalWithUI {
             if (loaded != null) {
                 System.out.println("\nLoaded character:\n");
                 CharacterPrinter.print(loaded);
+
+                System.out.print("\nDo you want to edit this character? (y/n): ");
+                String input = scanner.nextLine().trim();
+                if (input.equalsIgnoreCase("y")) {
+                    CliCharacterInteraction interaction = new CliCharacterInteraction(loaded);
+                    interaction.start();
+                } else {
+                    System.out.println("Exiting character view.");
+                }
+
             } else {
                 System.out.println("No character loaded.");
             }
 
         } else {
-            // -- CREATE NEW CHARACTER --
+            // --- CREATE NEW CHARACTER ---
             String name;
             while (true) {
                 System.out.print("Enter character name: ");
@@ -84,12 +95,15 @@ public class CharacterSheetTerminalWithUI {
                 System.out.println("\nCharacter saved successfully.");
 
                 System.out.println("Press Enter to show character stats...");
-                System.in.read();
+                scanner.nextLine();
 
                 CharacterPrinter.print(character);
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
+
+        scanner.close();
     }
 }

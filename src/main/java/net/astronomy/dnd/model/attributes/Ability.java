@@ -1,4 +1,4 @@
-package net.astronomy.dnd.model;
+package net.astronomy.dnd.model.attributes;
 
 import net.astronomy.dnd.model.enums.attributes.Race;
 

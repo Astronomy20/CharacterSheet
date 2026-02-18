@@ -1,6 +1,6 @@
 package net.astronomy.dnd.model.enums.attributes;
 
-import net.astronomy.dnd.model.Modifier.Modifiers;
+import net.astronomy.dnd.model.attributes.Modifier.Modifiers;
 import net.astronomy.dnd.util.dice.Dices.Dice;
 
 import java.util.Set;

@@ -1,4 +1,4 @@
-package net.astronomy.dnd.model;
+package net.astronomy.dnd.model.attributes;
 
 import net.astronomy.dnd.model.enums.attributes.CharacterClass;
 
@@ -60,7 +60,7 @@ public class Modifier {
         }
     }
 
-    Modifier(Level level, Ability abilities, CharacterClass characterClass) {
+    public Modifier(Level level, Ability abilities, CharacterClass characterClass) {
         this.strength = getModifier(abilities.getStrength()) + getProficientModifierValues(level, characterClass)[0];
         this.dexterity = getModifier(abilities.getDexterity()) + getProficientModifierValues(level, characterClass)[1];
         this.constitution = getModifier(abilities.getConstitution()) + getProficientModifierValues(level, characterClass)[2];

@@ -1,4 +1,4 @@
-package net.astronomy.dnd.model;
+package net.astronomy.dnd.model.attributes;
 
 /**
  * Represents a character's level and experience.
@@ -58,11 +58,25 @@ public class Level {
      * @param life character life instance
      * @param experiencePoints XP to add
      */
-    public void addExperiencePoints(Life life, int experiencePoints) {
+    public void addExperiencePoints(int experiencePoints, Life life) {
         this.experiencePoints += experiencePoints;
 
         while (this.level < 20 && this.experiencePoints >= CUMULATIVE_XP_TABLE[this.level]) {
             levelUp(life);
+        }
+    }
+
+    /**
+     * Removes XP and levels down if threshold is reached.
+     *
+     * @param life character life instance
+     * @param experiencePoints XP to add
+     */
+    public void removeExperiencePoints(int experiencePoints, Life life) {
+        this.experiencePoints -= experiencePoints;
+
+        while (this.level < 20 && this.experiencePoints <= CUMULATIVE_XP_TABLE[this.level]) {
+            levelDown(life);
         }
     }
 
@@ -78,6 +92,43 @@ public class Level {
         if (this.experiencePoints < 0) this.experiencePoints = 0;
 
         life.onLevelUp();
+    }
+
+    /**
+     * Increases level by one and adjusts XP.
+     *
+     * @param life character life instance
+     */
+    public void levelDown(Life life) {
+        this.level -= 1;
+        this.experiencePoints -= CUMULATIVE_XP_TABLE[this.level];
+
+        if (this.experiencePoints < 0) this.experiencePoints = 0;
+
+        life.onLevelDown();
+    }
+
+    /**
+     * Sets the character level directly.
+     * Handles both level up and level down logic.
+     *
+     * @param newLevel target level (1–20)
+     * @param life character life instance
+     */
+    public void setLevel(int newLevel, Life life) {
+        if (newLevel < 1 || newLevel > 20) {
+            throw new IllegalArgumentException("Level must be between 1 and 20.");
+        }
+
+        while (this.level < newLevel) {
+            life.onLevelUp();
+        }
+
+        while (this.level > newLevel) {
+            life.onLevelDown();
+        }
+
+        this.experiencePoints = CUMULATIVE_XP_TABLE[newLevel - 1];
     }
 
     /**

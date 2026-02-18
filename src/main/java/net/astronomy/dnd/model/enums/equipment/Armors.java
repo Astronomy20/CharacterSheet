@@ -1,6 +1,6 @@
 package net.astronomy.dnd.model.enums.equipment;
 
-import net.astronomy.dnd.model.Modifier;
+import net.astronomy.dnd.model.attributes.Modifier;
 
 public enum Armors {
     // Light Armor

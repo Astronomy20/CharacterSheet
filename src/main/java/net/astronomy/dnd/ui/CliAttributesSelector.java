@@ -30,7 +30,6 @@ public class CliAttributesSelector extends CliSelector {
                 })
                 .collect(Collectors.toList());
 
-        // Use the public selectOption from CliSelector
         return selectOption(title, options);
     }
 }
