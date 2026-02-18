@@ -23,7 +23,7 @@ public class ExampleSheetTerminalNoUI {
                 CharacterClass.MONK,
                 Background.ACOLYTE,
                 Alignment.LAWFUL_GOOD,
-                new Ability(15, 15, 15, 15, 15, 15));
+                new Ability(15, 15, 15, 15, 15, 25));
 
         CharacterPrinter.print(padre_mateo);
 
