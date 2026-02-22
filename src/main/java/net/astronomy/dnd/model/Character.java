@@ -11,7 +11,7 @@ import java.util.Set;
  */
 public class Character {
     /** The name of the character. */
-    private final String name;
+    private String name;
 
     /** The current level of the character. */
     private Level level;
@@ -62,7 +62,8 @@ public class Character {
      * @param alignment The character's alignment
      * @param abilities The base ability scores
      */
-    public Character(String name, Level level, Race race, CharacterClass characterClass, Background background, Alignment alignment, Ability abilities) {
+    public Character(String name, Level level, Race race, CharacterClass characterClass, Background background,
+                     Alignment alignment, Ability abilities) {
         this.name = name;
         this.level = level;
         this.race = race;
@@ -79,6 +80,33 @@ public class Character {
         this.currency = new Currency();
         this.languages = race.getRaceLanguages();
         this.life = new Life(this.level, this.race, this.characterClass, this.modifiers, this.inventory);
+    }
+
+    /**
+     * Restores transient fields after deserialization.
+     * Must be called by Session.loadCharacter() before any gameplay operations.
+     *
+     * @param characterClass the character's class
+     * @param modifiers      the character's computed modifiers
+     * @param inventory      the character's inventory
+     */
+    public void restoreTransients(String name, Level level, Race race, CharacterClass characterClass, Background background,
+                                  Alignment alignment, Ability abilities, Modifier modifiers, SavingThrow savingThrows,
+                                  Skills skills, Inventory inventory, Currency currency, Set<Language> languages, Life life) {
+        this.name = name;
+        this.level = level;
+        this.race = race;
+        this.characterClass = characterClass;
+        this.background = background;
+        this.alignment = alignment;
+        this.abilities = abilities;
+        this.modifiers = modifiers;
+        this.savingThrows = savingThrows;
+        this.skills = skills;
+        this.inventory = inventory;
+        this.currency = currency;
+        this.languages = languages;
+        this.life = life;
     }
 
     public void setRace(Race newRace) {

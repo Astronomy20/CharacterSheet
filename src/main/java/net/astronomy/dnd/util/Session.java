@@ -41,17 +41,30 @@ public class Session {
         String filePath = SAVE_DIRECTORY + File.separator + sanitizeFileName(characterName) + ".json";
 
         File file = new File(filePath);
-        if (!file.exists()) return null;
+        if (!file.exists()) {
+            return null;
+        }
 
         Character character;
         try (FileReader reader = new FileReader(filePath)) {
             character = gson.fromJson(reader, Character.class);
         }
 
-        character.getLife().restoreTransients(
+        character.restoreTransients(
+                character.getName(),
+                character.getLevel(),
+                character.getRace(),
                 character.getCharacterClass(),
+                character.getBackground(),
+                character.getAlignment(),
+                character.getAbilities(),
                 character.getModifiers(),
-                character.getInventory()
+                character.getSavingThrows(),
+                character.getSkills(),
+                character.getInventory(),
+                character.getCurrency(),
+                character.getLanguages(),
+                character.getLife()
         );
 
         return character;

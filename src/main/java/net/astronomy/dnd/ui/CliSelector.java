@@ -80,7 +80,6 @@ public class CliSelector {
      */
     public String promptLine(String prompt) {
         disableRawMode();
-        // Use print not println — readLine handles the newline
         System.out.print(prompt);
         System.out.flush();
         String line = reader.readLine("");
@@ -180,7 +179,9 @@ public class CliSelector {
     public String selectMainMenu() throws IOException {
         List<Option<String>> mainMenuOptions = List.of(
                 new Option<>("Create New Character", "CREATE"),
-                new Option<>("Load Saved Character", "LOAD")
+                new Option<>("Load Saved Character", "LOAD"),
+                new Option<>("Delete Saved Character", "DELETE"),
+                new Option<>("Exit", "EXIT")
         );
         return selectOption("Main Menu", mainMenuOptions);
     }

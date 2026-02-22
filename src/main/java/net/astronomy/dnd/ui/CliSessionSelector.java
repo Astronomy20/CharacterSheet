@@ -8,6 +8,7 @@ import org.jline.terminal.Terminal;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -18,42 +19,75 @@ import java.util.stream.Collectors;
  */
 public class CliSessionSelector extends CliSelector {
 
+    private static final String EXIT_SENTINEL = "__EXIT__";
+    private static final String EXIT_DISPLAY_NAME = "-- Back to Main Menu --";
+
     public CliSessionSelector() throws IOException {
         super();
     }
 
-    /** Reuse an existing terminal. */
     public CliSessionSelector(Terminal terminal, Attributes cookedAttributes, LineReader reader) {
         super(terminal, cookedAttributes, reader);
     }
 
     public Character selectSavedCharacter() throws IOException {
         List<String> savedNames = getSavedCharacterNames();
+
         if (savedNames.isEmpty()) {
-            System.out.println("No saved characters found.");
+            disableRawMode();
+            System.out.println("\nNo saved characters found.");
+            promptLine("Press Enter to return to main menu...");
             return null;
         }
 
-        String selectedName = selectOption("Select a character to load", wrapNamesAsOptions(savedNames));
-        return Session.loadCharacter(selectedName);
+        List<Option<String>> options = toOptions(savedNames);
+        options.add(new Option<>(EXIT_DISPLAY_NAME, EXIT_SENTINEL));
+
+        String selected = selectOption("Select a character to load", options);
+
+        if (selected == null || selected.equals(EXIT_SENTINEL)) return null;
+
+        return Session.loadCharacter(selected);
     }
 
     public String selectCharacterToDelete() throws IOException {
         List<String> savedNames = getSavedCharacterNames();
+
         if (savedNames.isEmpty()) {
-            System.out.println("No saved characters found.");
+            disableRawMode();
+            System.out.println("\nNo saved characters found.");
+            promptLine("Press Enter to return to main menu...");
             return null;
         }
 
-        String selectedName = selectOption("Select a character to delete", wrapNamesAsOptions(savedNames));
+        // Loop so a failed confirmation brings the user back to the list
+        while (true) {
+            List<Option<String>> options = toOptions(savedNames);
+            options.add(new Option<>(EXIT_DISPLAY_NAME, EXIT_SENTINEL));
 
-        boolean deleted = Session.deleteCharacter(selectedName);
-        if (deleted) {
-            System.out.println("Deleted character: " + selectedName);
-            return selectedName;
-        } else {
-            System.out.println("Failed to delete: " + selectedName);
-            return null;
+            String selected = selectOption("Select a character to delete", options);
+
+            if (selected == null || selected.equals(EXIT_SENTINEL)) return null;
+
+            String required = "delete " + selected;
+            String input = promptLine(
+                    "Type \"delete " + selected + "\" to confirm deletion: "
+            ).trim();
+
+            if (!input.equalsIgnoreCase(required)) {
+                System.out.println("Confirmation did not match. Deletion cancelled.");
+                promptLine("Press Enter to go back to the list...");
+                continue;
+            }
+
+            boolean deleted = Session.deleteCharacter(selected);
+            if (deleted) {
+                System.out.println("Character \"" + selected + "\" deleted successfully.");
+                return selected;
+            } else {
+                System.out.println("Failed to delete: " + selected);
+                return null;
+            }
         }
     }
 
@@ -67,9 +101,10 @@ public class CliSessionSelector extends CliSelector {
                 .collect(Collectors.toList());
     }
 
-    private List<Option<String>> wrapNamesAsOptions(List<String> names) {
+    /** Returns a mutable list so callers can append extra options (e.g. Exit). */
+    private List<Option<String>> toOptions(List<String> names) {
         return names.stream()
                 .map(name -> new Option<>(name, name))
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 }

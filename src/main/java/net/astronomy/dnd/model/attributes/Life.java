@@ -52,20 +52,6 @@ public class Life {
     }
 
     /**
-     * Restores transient fields after deserialization.
-     * Must be called by Session.loadCharacter() before any gameplay operations.
-     *
-     * @param characterClass the character's class
-     * @param modifiers      the character's computed modifiers
-     * @param inventory      the character's inventory
-     */
-    public void restoreTransients(CharacterClass characterClass, Modifier modifiers, Inventory inventory) {
-        this.characterClass = characterClass;
-        this.modifiers = modifiers;
-        this.inventory = inventory;
-    }
-
-    /**
      * Returns true if transient fields have been restored.
      * Useful for defensive checks.
      */
