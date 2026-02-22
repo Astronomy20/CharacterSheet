@@ -14,39 +14,19 @@ import java.util.List;
  */
 public class Life {
 
-    /** Character's hit dice */
     private Dice hitDice;
-
-    /** Max life points */
     private int maxLifePoints;
-
-    /** Current life points */
     private int currentLifePoints;
-
-    /** Current armor class */
     private int armorClass;
-
-    /** Initiative modifier */
     private int initiative;
-
-    /** Movement speed */
     private double speed;
-
-    /** HP gained per level (excluding level 1 base HP) */
     private List<Integer> hpPerLevel = new ArrayList<>();
 
-    /** Character class (transient) */
+    // Transient — not serialized, must be restored after loading from JSON
     private transient CharacterClass characterClass;
-
-    /** Attribute modifiers (transient) */
     private transient Modifier modifiers;
-
-    /** Inventory (transient) */
     private transient Inventory inventory;
 
-    /**
-     * Creates a Life instance based on level, race, class, modifiers, and inventory.
-     */
     public Life(Level level,
                 Race race,
                 CharacterClass characterClass,
@@ -59,7 +39,6 @@ public class Life {
         this.inventory = inventory;
 
         int baseHp = hitDice.getSides() + modifiers.getConstitution();
-
         this.maxLifePoints = baseHp;
         this.currentLifePoints = baseHp;
 
@@ -73,10 +52,32 @@ public class Life {
     }
 
     /**
-     * Called on level-up.
-     * Rolls HP and stores the gained amount.
+     * Restores transient fields after deserialization.
+     * Must be called by Session.loadCharacter() before any gameplay operations.
+     *
+     * @param characterClass the character's class
+     * @param modifiers      the character's computed modifiers
+     * @param inventory      the character's inventory
      */
+    public void restoreTransients(CharacterClass characterClass, Modifier modifiers, Inventory inventory) {
+        this.characterClass = characterClass;
+        this.modifiers = modifiers;
+        this.inventory = inventory;
+    }
+
+    /**
+     * Returns true if transient fields have been restored.
+     * Useful for defensive checks.
+     */
+    public boolean isTransientsRestored() {
+        return modifiers != null && characterClass != null && inventory != null;
+    }
+
     public void onLevelUp() {
+        if (modifiers == null) {
+            throw new IllegalStateException(
+                    "Life.modifiers is null — call restoreTransients() after loading from JSON before modifying level.");
+        }
         int gainedHp = DiceRoll.roll(hitDice, 1).total() + modifiers.getConstitution();
         if (gainedHp < 1) gainedHp = 1;
 
@@ -85,14 +86,8 @@ public class Life {
         currentLifePoints += gainedHp;
     }
 
-    /**
-     * Called on level-down.
-     * Removes the last gained HP deterministically.
-     */
     public void onLevelDown() {
-        if (hpPerLevel.isEmpty()) {
-            return;
-        }
+        if (hpPerLevel.isEmpty()) return;
 
         int removedHp = hpPerLevel.removeLast();
         maxLifePoints -= removedHp;
@@ -113,24 +108,13 @@ public class Life {
         this.armorClass = calculateArmorClass();
     }
 
-    /**
-     * Sets the maximum life points.
-     * Adjusts current life points if they exceed the new maximum.
-     *
-     * @param newMax the new maximum HP
-     */
     public void setMaxLifePoints(int newMax) {
-        if (newMax < 1) {
-            throw new IllegalArgumentException("Max life points must be at least 1.");
-        }
-
+        if (newMax < 1) throw new IllegalArgumentException("Max life points must be at least 1.");
         this.maxLifePoints = newMax;
-
         if (this.currentLifePoints > this.maxLifePoints) {
             this.currentLifePoints = this.maxLifePoints;
         }
     }
-
 
     public void setCurrentLifePoints(int value) {
         this.currentLifePoints = Math.max(0, Math.min(value, maxLifePoints));
@@ -148,12 +132,6 @@ public class Life {
         this.speed = newSpeed;
     }
 
-    /**
-     * Returns the list of HP gained per level (excluding level 1 base HP).
-     * The list is immutable to prevent external modification.
-     *
-     * @return list of integers representing HP gained at each level-up
-     */
     public List<Integer> getHpPerLevel() {
         return List.copyOf(hpPerLevel);
     }
@@ -161,23 +139,18 @@ public class Life {
     public Dice getHitDice() {
         return hitDice;
     }
-
     public int getMaxLifePoints() {
         return maxLifePoints;
     }
-
     public int getCurrentLifePoints() {
         return currentLifePoints;
     }
-
     public int getArmorClass() {
         return armorClass;
     }
-
     public int getInitiative() {
         return initiative;
     }
-
     public double getSpeed() {
         return speed;
     }
