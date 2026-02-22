@@ -96,11 +96,15 @@ public class CharacterPrinter {
         character.getInventory().getInstruments().forEach((item, quantity) ->
                 System.out.println("  " + item + " x" + quantity)
         );
+        System.out.println("Miscellaneous:");
+        character.getInventory().getMiscellaneous().forEach((item, quantity) ->
+                System.out.println("  " + item + " x" + quantity)
+        );
         System.out.println();
 
         System.out.println("--- Currency ---");
         character.getCurrency().getAllCoins().forEach((coin, quantity) ->
-                System.out.println("  " + coin.getDisplayName() + ": " + quantity)
+                System.out.println(coin.getDisplayName() + ": " + quantity)
         );
     }
 }

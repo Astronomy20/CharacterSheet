@@ -25,10 +25,23 @@ public class Session {
         }
     }
 
+    /**
+     * Saves a character atomically — writes to a .tmp file first,
+     * then renames it over the real .json only after a successful write.
+     * This prevents the save file from being wiped if anything goes wrong mid-write.
+     */
     public static void saveCharacter(Character character) throws IOException {
-        String filePath = SAVE_DIRECTORY + File.separator + sanitizeFileName(character.getName()) + ".json";
-        try (FileWriter writer = new FileWriter(filePath)) {
+        String fileName  = sanitizeFileName(character.getName());
+        File   finalFile = new File(SAVE_DIRECTORY + File.separator + fileName + ".json");
+        File   tempFile  = new File(SAVE_DIRECTORY + File.separator + fileName + ".tmp");
+
+        try (FileWriter writer = new FileWriter(tempFile)) {
             gson.toJson(character, writer);
+        }
+
+        if (finalFile.exists()) finalFile.delete();
+        if (!tempFile.renameTo(finalFile)) {
+            throw new IOException("Failed to finalize save file for: " + character.getName());
         }
     }
 
@@ -38,15 +51,16 @@ public class Session {
      * and any level or XP change will throw NullPointerException.
      */
     public static Character loadCharacter(String characterName) throws IOException {
-        String filePath = SAVE_DIRECTORY + File.separator + sanitizeFileName(characterName) + ".json";
+        String fileName  = sanitizeFileName(characterName);
+        File   finalFile = new File(SAVE_DIRECTORY + File.separator + fileName + ".json");
+        File   tempFile  = new File(SAVE_DIRECTORY + File.separator + fileName + ".tmp");
 
-        File file = new File(filePath);
-        if (!file.exists()) {
-            return null;
-        }
+        if (tempFile.exists()) tempFile.delete();
+
+        if (!finalFile.exists()) return null;
 
         Character character;
-        try (FileReader reader = new FileReader(filePath)) {
+        try (FileReader reader = new FileReader(finalFile)) {
             character = gson.fromJson(reader, Character.class);
         }
 
