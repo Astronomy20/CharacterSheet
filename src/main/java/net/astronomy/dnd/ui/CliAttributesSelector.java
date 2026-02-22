@@ -1,5 +1,9 @@
 package net.astronomy.dnd.ui;
 
+import org.jline.reader.LineReader;
+import org.jline.terminal.Attributes;
+import org.jline.terminal.Terminal;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -14,9 +18,11 @@ public class CliAttributesSelector extends CliSelector {
         super();
     }
 
-    /**
-     * Generic enum selector returning the selected enum value.
-     */
+    /** Reuse an existing terminal — no new terminal opened. */
+    public CliAttributesSelector(Terminal terminal, Attributes cookedAttributes, LineReader reader) {
+        super(terminal, cookedAttributes, reader);
+    }
+
     public <E extends Enum<E>> E selectEnum(String title, E[] values) throws IOException {
         List<Option<E>> options = Arrays.stream(values)
                 .map(e -> {

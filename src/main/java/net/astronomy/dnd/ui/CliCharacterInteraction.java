@@ -7,6 +7,9 @@ import net.astronomy.dnd.model.enums.attributes.CharacterClass;
 import net.astronomy.dnd.model.enums.attributes.Race;
 import net.astronomy.dnd.util.CharacterPrinter;
 import net.astronomy.dnd.util.Session;
+import org.jline.reader.LineReader;
+import org.jline.terminal.Attributes;
+import org.jline.terminal.Terminal;
 
 import java.io.IOException;
 import java.util.List;
@@ -20,64 +23,45 @@ public class CliCharacterInteraction extends CliSelector {
         this.character = character;
     }
 
+    /** Reuse an existing terminal. */
+    public CliCharacterInteraction(Terminal terminal, Attributes cookedAttributes, LineReader reader, Character character) {
+        super(terminal, cookedAttributes, reader);
+        this.character = character;
+    }
+
     public void start() throws IOException {
 
         while (true) {
-
             CharacterPrinter.print(character);
 
             List<Option<String>> options = List.of(
-                    new Option<>("Add Life", "ADD_LIFE"),
-                    new Option<>("Subtract Life", "SUB_LIFE"),
-                    new Option<>("Add XP", "ADD_XP"),
-                    new Option<>("Remove XP", "REMOVE_XP"),
-                    new Option<>("Change Race", "CHANGE_RACE"),
-                    new Option<>("Change Class", "CHANGE_CLASS"),
+                    new Option<>("Add Life",          "ADD_LIFE"),
+                    new Option<>("Subtract Life",     "SUB_LIFE"),
+                    new Option<>("Add XP",            "ADD_XP"),
+                    new Option<>("Remove XP",         "REMOVE_XP"),
+                    new Option<>("Change Race",       "CHANGE_RACE"),
+                    new Option<>("Change Class",      "CHANGE_CLASS"),
                     new Option<>("Change Background", "CHANGE_BACKGROUND"),
-                    new Option<>("Change Alignment", "CHANGE_ALIGNMENT"),
-                    new Option<>("Set Level", "SET_LEVEL"),
-                    new Option<>("Exit", "EXIT")
+                    new Option<>("Change Alignment",  "CHANGE_ALIGNMENT"),
+                    new Option<>("Set Level",         "SET_LEVEL"),
+                    new Option<>("Exit",              "EXIT")
             );
 
             String action = selectOption("Character Interaction", options);
 
             switch (action) {
-
-                case "ADD_LIFE" -> modifyLife(true);
-                case "SUB_LIFE" -> modifyLife(false);
-
-                case "ADD_XP" -> modifyXp(true);
-                case "REMOVE_XP" -> modifyXp(false);
-
-                case "CHANGE_RACE" -> changeBaseAttribute(
-                        "Race",
-                        Race.values(),
-                        character::setRace
-                );
-
-                case "CHANGE_CLASS" -> changeBaseAttribute(
-                        "Class",
-                        CharacterClass.values(),
-                        character::setCharacterClass
-                );
-
-                case "CHANGE_BACKGROUND" -> changeBaseAttribute(
-                        "Background",
-                        Background.values(),
-                        character::setBackground
-                );
-
-                case "CHANGE_ALIGNMENT" -> changeBaseAttribute(
-                        "Alignment",
-                        Alignment.values(),
-                        character::setAlignment
-                );
-
-                case "SET_LEVEL" -> setLevel();
-
+                case "ADD_LIFE"          -> modifyLife(true);
+                case "SUB_LIFE"          -> modifyLife(false);
+                case "ADD_XP"            -> modifyXp(true);
+                case "REMOVE_XP"         -> modifyXp(false);
+                case "CHANGE_RACE"       -> changeBaseAttribute("Race",       Race.values(),           character::setRace);
+                case "CHANGE_CLASS"      -> changeBaseAttribute("Class",      CharacterClass.values(), character::setCharacterClass);
+                case "CHANGE_BACKGROUND" -> changeBaseAttribute("Background", Background.values(),     character::setBackground);
+                case "CHANGE_ALIGNMENT"  -> changeBaseAttribute("Alignment",  Alignment.values(),      character::setAlignment);
+                case "SET_LEVEL"         -> setLevel();
                 case "EXIT" -> {
                     Session.saveCharacter(character);
-                    close();
+                    // Don't close — caller owns the terminal
                     return;
                 }
             }
@@ -89,9 +73,9 @@ public class CliCharacterInteraction extends CliSelector {
     // =========================
 
     private void modifyLife(boolean add) {
-        int amount = promptForNumber("Enter life amount: ");
+        int amount = promptInt("Enter life amount: ");
         if (add) character.getLife().addLifePoints(amount);
-        else character.getLife().removeLifePoints(amount);
+        else     character.getLife().removeLifePoints(amount);
     }
 
     // =========================
@@ -99,9 +83,9 @@ public class CliCharacterInteraction extends CliSelector {
     // =========================
 
     private void modifyXp(boolean add) {
-        int amount = promptForNumber("Enter XP amount: ");
+        int amount = promptInt("Enter XP amount: ");
         if (add) character.getLevel().addExperiencePoints(amount, character.getLife());
-        else character.getLevel().removeExperiencePoints(amount, character.getLife());
+        else     character.getLevel().removeExperiencePoints(amount, character.getLife());
     }
 
     // =========================
@@ -113,19 +97,16 @@ public class CliCharacterInteraction extends CliSelector {
             E[] values,
             java.util.function.Consumer<E> setter) throws IOException {
 
-        if (confirmManual("""
-                WARNING:
-                You are modifying a BASE CHARACTER ATTRIBUTE.
-                This can affect derived stats, proficiencies and progression.
-                Type 'confirm' to proceed:
-                """, "confirm")) {
+        if (confirmManual(
+                "WARNING: Modifying a base attribute affects derived stats.\nType 'confirm' to proceed: ",
+                "confirm")) {
             return;
         }
 
-        CliAttributesSelector selector = new CliAttributesSelector();
+        CliAttributesSelector selector = new CliAttributesSelector(
+                getTerminal(), getCookedAttributes(), getReader()
+        );
         E selected = selector.selectEnum("Select new " + attributeName, values);
-        selector.close();
-
         setter.accept(selected);
     }
 
@@ -134,17 +115,13 @@ public class CliCharacterInteraction extends CliSelector {
     // =========================
 
     private void setLevel() {
-
-        if (confirmManual("""
-                WARNING:
-                You are manually setting the character level.
-                This alters progression and balance.
-                Type 'yes' to confirm:
-                """, "yes")) {
+        if (confirmManual(
+                "WARNING: Manually setting level alters progression.\nType 'yes' to confirm: ",
+                "yes")) {
             return;
         }
 
-        int level = promptForNumber("Enter new level: ");
+        int level = promptInt("Enter new level (1-20): ");
         character.getLevel().setLevel(level, character.getLife());
     }
 
@@ -152,15 +129,8 @@ public class CliCharacterInteraction extends CliSelector {
     // UTILITIES
     // =========================
 
-    private int promptForNumber(String message) {
-        System.out.print(message);
-        String input = new java.util.Scanner(System.in).nextLine();
-        return Integer.parseInt(input);
-    }
-
     private boolean confirmManual(String warningText, String requiredWord) {
-        System.out.println(warningText);
-        String input = new java.util.Scanner(System.in).nextLine();
-        return !input.equalsIgnoreCase(requiredWord);
+        String input = promptLine(warningText);
+        return !input.trim().equalsIgnoreCase(requiredWord);
     }
 }

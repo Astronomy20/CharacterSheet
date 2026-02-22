@@ -2,6 +2,9 @@ package net.astronomy.dnd.ui;
 
 import net.astronomy.dnd.model.Character;
 import net.astronomy.dnd.util.Session;
+import org.jline.reader.LineReader;
+import org.jline.terminal.Attributes;
+import org.jline.terminal.Terminal;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +15,6 @@ import java.util.stream.Collectors;
 
 /**
  * CLI selector for saved character sessions.
- * Allows user to select a character to load or delete.
  */
 public class CliSessionSelector extends CliSelector {
 
@@ -20,12 +22,11 @@ public class CliSessionSelector extends CliSelector {
         super();
     }
 
-    /**
-     * Let the user select a saved character to load.
-     *
-     * @return the selected Character object, or null if none exist
-     * @throws IOException on terminal read error
-     */
+    /** Reuse an existing terminal. */
+    public CliSessionSelector(Terminal terminal, Attributes cookedAttributes, LineReader reader) {
+        super(terminal, cookedAttributes, reader);
+    }
+
     public Character selectSavedCharacter() throws IOException {
         List<String> savedNames = getSavedCharacterNames();
         if (savedNames.isEmpty()) {
@@ -37,12 +38,6 @@ public class CliSessionSelector extends CliSelector {
         return Session.loadCharacter(selectedName);
     }
 
-    /**
-     * Let the user select a saved character to delete.
-     *
-     * @return the name of the deleted character, or null if canceled
-     * @throws IOException on terminal read error
-     */
     public String selectCharacterToDelete() throws IOException {
         List<String> savedNames = getSavedCharacterNames();
         if (savedNames.isEmpty()) {
@@ -62,23 +57,18 @@ public class CliSessionSelector extends CliSelector {
         }
     }
 
-    /**
-     * Returns saved character names without the .json extension.
-     */
     private List<String> getSavedCharacterNames() {
         File savesDir = new File("saves");
         if (!savesDir.exists() || !savesDir.isDirectory()) return List.of();
 
-        return Arrays.stream(Objects.requireNonNull(savesDir.listFiles((dir, name) -> name.endsWith(".json"))))
+        return Arrays.stream(Objects.requireNonNull(
+                        savesDir.listFiles((dir, name) -> name.endsWith(".json"))))
                 .map(file -> file.getName().replaceFirst("\\.json$", ""))
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Names to options wrapper
-     */
-    private List<Option<String>> wrapNamesAsOptions(List<String> savedNames) {
-        return savedNames.stream()
+    private List<Option<String>> wrapNamesAsOptions(List<String> names) {
+        return names.stream()
                 .map(name -> new Option<>(name, name))
                 .collect(Collectors.toList());
     }

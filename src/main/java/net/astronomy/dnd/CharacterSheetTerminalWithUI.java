@@ -16,54 +16,51 @@ import net.astronomy.dnd.util.Session;
 import net.astronomy.dnd.util.dice.Dices;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 public class CharacterSheetTerminalWithUI {
 
     public static void main(String[] args) throws IOException {
 
-        Scanner scanner = new Scanner(System.in);
+        // Single selector owns the terminal for the entire session
+        CliSelector root = new CliSelector();
 
-        // --- MAIN MENU ---
-        CliSelector menuSelector = new CliSelector();
-        String choice = menuSelector.selectMainMenu();
-        menuSelector.close();
+        String choice = root.selectMainMenu();
 
         if ("LOAD".equals(choice)) {
-            // --- LOAD SAVED CHARACTER ---
-            CliSessionSelector sessionSelector = new CliSessionSelector();
+            // --- LOAD ---
+            CliSessionSelector sessionSelector = new CliSessionSelector(
+                    root.getTerminal(), root.getCookedAttributes(), root.getReader()
+            );
             Character loaded = sessionSelector.selectSavedCharacter();
-            sessionSelector.close();
+            // Don't close sessionSelector — root owns the terminal
 
             if (loaded != null) {
                 System.out.println("\nLoaded character:\n");
                 CharacterPrinter.print(loaded);
 
-                System.out.print("\nDo you want to edit this character? (y/n): ");
-                String input = scanner.nextLine().trim();
+                String input = root.promptLine("Do you want to edit this character? (y/n): ").trim();
                 if (input.equalsIgnoreCase("y")) {
-                    CliCharacterInteraction interaction = new CliCharacterInteraction(loaded);
+                    CliCharacterInteraction interaction = new CliCharacterInteraction(
+                            root.getTerminal(), root.getCookedAttributes(), root.getReader(), loaded
+                    );
                     interaction.start();
                 } else {
                     System.out.println("Exiting character view.");
                 }
-
             } else {
                 System.out.println("No character loaded.");
             }
 
         } else {
-            // --- CREATE NEW CHARACTER ---
+            // --- CREATE ---
             String name;
             while (true) {
-                System.out.print("Enter character name: ");
-                name = scanner.nextLine().trim();
+                name = root.promptLine("Enter character name: ").trim();
 
                 if (name.isEmpty()) {
                     System.out.println("Name cannot be empty. Try again.");
                     continue;
                 }
-
                 if (Session.characterExists(name)) {
                     System.out.println("A character with this name already exists. Choose another name.");
                     continue;
@@ -71,39 +68,28 @@ public class CharacterSheetTerminalWithUI {
                 break;
             }
 
-            CliAttributesSelector characterAttributes = new CliAttributesSelector();
+            CliAttributesSelector attrs = new CliAttributesSelector(
+                    root.getTerminal(), root.getCookedAttributes(), root.getReader()
+            );
 
-            Race race = characterAttributes.selectEnum("Select Race", Race.values());
-            CharacterClass characterClass = characterAttributes.selectEnum("Select Class", CharacterClass.values());
-            Background background = characterAttributes.selectEnum("Select Background", Background.values());
-            Alignment alignment = characterAttributes.selectEnum("Select Alignment", Alignment.values());
-
-            characterAttributes.close();
+            Race           race            = attrs.selectEnum("Select Race",       Race.values());
+            CharacterClass characterClass  = attrs.selectEnum("Select Class",      CharacterClass.values());
+            Background     background      = attrs.selectEnum("Select Background", Background.values());
+            Alignment      alignment       = attrs.selectEnum("Select Alignment",  Alignment.values());
 
             int[] rolls = Dices.getAbilitiesValueRolls();
-            Ability ability = new Ability(
-                    rolls[0], rolls[1], rolls[2], rolls[3], rolls[4], rolls[5]
-            );
-            Level level = new Level(1, 0);
+            Ability ability = new Ability(rolls[0], rolls[1], rolls[2], rolls[3], rolls[4], rolls[5]);
+            Level   level   = new Level(1, 0);
 
-            Character character = new Character(
-                    name, level, race, characterClass, background, alignment, ability
-            );
+            Character character = new Character(name, level, race, characterClass, background, alignment, ability);
 
-            try {
-                Session.saveCharacter(character);
-                System.out.println("\nCharacter saved successfully.");
+            Session.saveCharacter(character);
+            System.out.println("\nCharacter saved successfully.");
 
-                System.out.println("Press Enter to show character stats...");
-                scanner.nextLine();
-
-                CharacterPrinter.print(character);
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            root.promptLine("Press Enter to show character stats...");
+            CharacterPrinter.print(character);
         }
 
-        scanner.close();
+        root.close();
     }
 }
