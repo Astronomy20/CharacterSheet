@@ -109,6 +109,10 @@ public class Character {
         this.life = life;
     }
 
+    public void restoreLifeTransients() {
+        this.life.restoreTransients(this.characterClass, this.modifiers, this.inventory);
+    }
+
     public void setRace(Race newRace) {
         if (newRace == null) {
             throw new IllegalArgumentException("Race cannot be null.");

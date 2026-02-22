@@ -8,6 +8,7 @@ import net.astronomy.dnd.model.enums.attributes.CharacterClass;
 import net.astronomy.dnd.model.enums.attributes.Race;
 import net.astronomy.dnd.model.attributes.Level;
 import net.astronomy.dnd.util.CharacterPrinter;
+import net.astronomy.dnd.util.RawCharacterPrinter;
 import net.astronomy.dnd.util.Session;
 
 import java.io.IOException;
@@ -25,7 +26,7 @@ public class ExampleSheetTerminalNoUI {
                 Alignment.LAWFUL_GOOD,
                 new Ability(15, 15, 15, 15, 15, 15));
 
-        CharacterPrinter.print(padre_mateo);
+        RawCharacterPrinter.print(padre_mateo);
 
         try {
             Session.saveCharacter(padre_mateo);

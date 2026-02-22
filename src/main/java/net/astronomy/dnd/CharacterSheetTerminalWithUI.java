@@ -51,7 +51,7 @@ public class CharacterSheetTerminalWithUI {
                         continue;
                     }
 
-                    break;
+                    continue;
                 }
                 case "CREATE":
                     String name;

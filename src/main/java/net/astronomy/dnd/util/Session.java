@@ -25,11 +25,6 @@ public class Session {
         }
     }
 
-    /**
-     * Saves a character atomically — writes to a .tmp file first,
-     * then renames it over the real .json only after a successful write.
-     * This prevents the save file from being wiped if anything goes wrong mid-write.
-     */
     public static void saveCharacter(Character character) throws IOException {
         String fileName  = sanitizeFileName(character.getName());
         File   finalFile = new File(SAVE_DIRECTORY + File.separator + fileName + ".json");
@@ -46,9 +41,8 @@ public class Session {
     }
 
     /**
-     * Loads a character and restores transient fields that Gson skips.
-     * Without this, Life.modifiers / characterClass / inventory remain null
-     * and any level or XP change will throw NullPointerException.
+     * Loads a character and calls character.restoreTransients() to fix
+     * the transient fields Gson skips during deserialization.
      */
     public static Character loadCharacter(String characterName) throws IOException {
         String fileName  = sanitizeFileName(characterName);
@@ -56,7 +50,6 @@ public class Session {
         File   tempFile  = new File(SAVE_DIRECTORY + File.separator + fileName + ".tmp");
 
         if (tempFile.exists()) tempFile.delete();
-
         if (!finalFile.exists()) return null;
 
         Character character;
@@ -80,6 +73,8 @@ public class Session {
                 character.getLanguages(),
                 character.getLife()
         );
+
+        character.restoreLifeTransients();
 
         return character;
     }

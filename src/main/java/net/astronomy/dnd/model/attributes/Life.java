@@ -11,6 +11,8 @@ import java.util.List;
 /**
  * Represents a character's life stats.
  * Tracks hit points, armor class, initiative, and speed.
+ * Transient fields are restored via Character.restoreTransients(),
+ * which calls restoreTransients() on this class internally.
  */
 public class Life {
 
@@ -22,7 +24,6 @@ public class Life {
     private double speed;
     private List<Integer> hpPerLevel = new ArrayList<>();
 
-    // Transient — not serialized, must be restored after loading from JSON
     private transient CharacterClass characterClass;
     private transient Modifier modifiers;
     private transient Inventory inventory;
@@ -52,9 +53,15 @@ public class Life {
     }
 
     /**
-     * Returns true if transient fields have been restored.
-     * Useful for defensive checks.
+     * Called by Character.restoreTransients() after JSON deserialization.
+     * Not meant to be called directly — use Character.restoreTransients() instead.
      */
+    public void restoreTransients(CharacterClass characterClass, Modifier modifiers, Inventory inventory) {
+        this.characterClass = characterClass;
+        this.modifiers = modifiers;
+        this.inventory = inventory;
+    }
+
     public boolean isTransientsRestored() {
         return modifiers != null && characterClass != null && inventory != null;
     }
@@ -62,7 +69,7 @@ public class Life {
     public void onLevelUp() {
         if (modifiers == null) {
             throw new IllegalStateException(
-                    "Life.modifiers is null — call restoreTransients() after loading from JSON before modifying level.");
+                    "Life.modifiers is null — call character.restoreTransients() after loading from JSON.");
         }
         int gainedHp = DiceRoll.roll(hitDice, 1).total() + modifiers.getConstitution();
         if (gainedHp < 1) gainedHp = 1;
@@ -106,38 +113,15 @@ public class Life {
         this.currentLifePoints = Math.max(0, Math.min(value, maxLifePoints));
     }
 
-    public void addLifePoints(int points) {
-        setCurrentLifePoints(this.currentLifePoints + points);
-    }
+    public void addLifePoints(int points)    { setCurrentLifePoints(this.currentLifePoints + points); }
+    public void removeLifePoints(int points) { setCurrentLifePoints(this.currentLifePoints - points); }
+    public void updateSpeed(double newSpeed) { this.speed = newSpeed; }
 
-    public void removeLifePoints(int points) {
-        setCurrentLifePoints(this.currentLifePoints - points);
-    }
-
-    public void updateSpeed(double newSpeed) {
-        this.speed = newSpeed;
-    }
-
-    public List<Integer> getHpPerLevel() {
-        return List.copyOf(hpPerLevel);
-    }
-
-    public Dice getHitDice() {
-        return hitDice;
-    }
-    public int getMaxLifePoints() {
-        return maxLifePoints;
-    }
-    public int getCurrentLifePoints() {
-        return currentLifePoints;
-    }
-    public int getArmorClass() {
-        return armorClass;
-    }
-    public int getInitiative() {
-        return initiative;
-    }
-    public double getSpeed() {
-        return speed;
-    }
+    public List<Integer> getHpPerLevel()  { return List.copyOf(hpPerLevel); }
+    public Dice getHitDice()              { return hitDice; }
+    public int getMaxLifePoints()         { return maxLifePoints; }
+    public int getCurrentLifePoints()     { return currentLifePoints; }
+    public int getArmorClass()            { return armorClass; }
+    public int getInitiative()            { return initiative; }
+    public double getSpeed()              { return speed; }
 }
